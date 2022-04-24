@@ -7,7 +7,8 @@ const { findOrCreateByGoogleId, findUserById } = require("./userService");
 
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 require("dotenv").config();
-const { MONGO_URI } = process.env;
+const { MONGO_URI, GOOGLE_CLIENT_ID, GOOGLE_SECRET_KEY, GOOGLE_CALLBACK_URL } =
+  process.env;
 
 // Google Authentication source: http://www.passportjs.org/packages/passport-google-oauth20/
 // Creating the session cookie when a new user has been authenticated
@@ -24,11 +25,9 @@ passport.deserializeUser(async function (userId, done) {
 passport.use(
   new GoogleStrategy(
     {
-      clientID:
-        "19223609701-mm67k81kilshbt9cckm3mpcl0gunm42c.apps.googleusercontent.com",
-      clientSecret: "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",
-      callbackURL:
-        "https://4ad4-70-83-55-157.ngrok.io/api/auth/google/callback",
+      clientID: GOOGLE_CLIENT_ID,
+      clientSecret: GOOGLE_SECRET_KEY,
+      callbackURL: GOOGLE_CALLBACK_URL,
     },
     async function (accessToken, refreshToken, profile, cb) {
       const user = await findOrCreateByGoogleId(profile);
