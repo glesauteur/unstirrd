@@ -79,7 +79,7 @@ function setupAuthMiddlewares(app) {
     passport.authenticate("google", { failureRedirect: "/signin" }),
     function (req, res) {
       // Successful authentication, redirect home.
-      res.redirect("https://4ad4-70-83-55-157.ngrok.io");
+      res.redirect(COOKIE_DOMAIN);
     }
   );
 
