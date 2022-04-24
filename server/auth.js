@@ -7,8 +7,13 @@ const { findOrCreateByGoogleId, findUserById } = require("./userService");
 
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 require("dotenv").config();
-const { MONGO_URI, GOOGLE_CLIENT_ID, GOOGLE_SECRET_KEY, GOOGLE_CALLBACK_URL } =
-  process.env;
+const {
+  MONGO_URI,
+  GOOGLE_CLIENT_ID,
+  GOOGLE_SECRET_KEY,
+  GOOGLE_CALLBACK_URL,
+  COOKIE_DOMAIN,
+} = process.env;
 
 // Google Authentication source: http://www.passportjs.org/packages/passport-google-oauth20/
 // Creating the session cookie when a new user has been authenticated
@@ -47,7 +52,7 @@ function setupAuthMiddlewares(app) {
       saveUninitialized: true,
       cookie: {
         path: "/",
-        domain: "4ad4-70-83-55-157.ngrok.io",
+        domain: COOKIE_DOMAIN,
         maxAge: 24 * 60 * 60 * 1000, // 24 hours
         sameSite: "Strict",
         httpOnly: true,
