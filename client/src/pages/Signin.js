@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import logo from "./Unstirrd.svg";
-import googleLogo from "./Google__G__Logo.svg";
+import logo from "../assets/Unstirrd.svg";
+import googleLogo from "../assets/Google__G__Logo.svg";
 
 const Signin = () => {
   const handleSignIn = () => {

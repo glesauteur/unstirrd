@@ -6,7 +6,7 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 import Location from "./Location";
 
-import { debounce } from "./utils";
+import { debounce } from "../utils";
 
 const SearchBar = () => {
   const [searchResults, setSearchResults] = useState(null);

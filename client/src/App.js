@@ -1,9 +1,10 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Homepage from "./Homepage";
-import Signin from "./Signin";
+import HomePage from "./pages/HomePage";
+import Signin from "./pages/Signin";
 import GlobalStyles from "./GlobalStyles";
 import { AuthenticatedRoute } from "./auth/AuthenticatedRoute";
 import { AuthProvider } from "./auth/AuthContext";
+import LocationPage from "./pages/LocationPage";
 
 function App() {
   return (
@@ -17,10 +18,20 @@ function App() {
               exact
               element={
                 <AuthenticatedRoute>
-                  <Homepage />
+                  <HomePage />
                 </AuthenticatedRoute>
               }
             />
+            <Route
+              path="/location/:locationId"
+              exact
+              element={
+                // <AuthenticatedRoute>
+                <LocationPage />
+                // </AuthenticatedRoute>
+              }
+            />
+
             <Route path="/signin" element={<Signin />}></Route>
           </Routes>
         </AuthProvider>
