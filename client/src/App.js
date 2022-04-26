@@ -5,6 +5,7 @@ import GlobalStyles from "./GlobalStyles";
 import { AuthenticatedRoute } from "./auth/AuthenticatedRoute";
 import { AuthProvider } from "./auth/AuthContext";
 import LocationPage from "./pages/LocationPage";
+import CheckinPage from "./pages/CheckinPage";
 
 function App() {
   return (
@@ -28,6 +29,15 @@ function App() {
               element={
                 // <AuthenticatedRoute>
                 <LocationPage />
+                // </AuthenticatedRoute>
+              }
+            />
+            <Route
+              path="/checkin"
+              exact
+              element={
+                // <AuthenticatedRoute>
+                <CheckinPage />
                 // </AuthenticatedRoute>
               }
             />

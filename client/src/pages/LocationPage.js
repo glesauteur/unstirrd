@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-import Modal from "../components/Modal";
+import CheckinPage from "./CheckinPage";
 
 const LocationPage = () => {
   let { locationId } = useParams();
@@ -10,6 +10,11 @@ const LocationPage = () => {
   const [location, setLocation] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
+  const navigate = useNavigate();
+
+  const handleCheckin = () => {
+    navigate(`/checkin`);
+  };
   // useEffect(() => {
   //   const options = {
   //     method: "GET",
@@ -35,7 +40,7 @@ const LocationPage = () => {
 
   return (
     <>
-      <Modal showModal={showModal} setShowModal={setShowModal} />
+      <CheckinPage locationId={locationId} />
       <Container>
         <LocationWrapper>
           <Name>Darling</Name>
@@ -58,7 +63,7 @@ const LocationPage = () => {
             ></Iframe>
           </IframeContainer>
           <CheckinContainer>
-            <CheckinButton onClick={openModal}>CHECKIN</CheckinButton>
+            <CheckinButton onClick={handleCheckin}>CHECKIN</CheckinButton>
           </CheckinContainer>
         </LocationWrapper>
       </Container>
