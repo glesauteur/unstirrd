@@ -34,7 +34,7 @@ export default createGlobalStyle`
         display: block;
     }
     body {
-      height: 100vh;
+      /* height: 100vh; */
   background-image: linear-gradient(
     180deg,
     hsl(14deg 100% 50%) 0%,

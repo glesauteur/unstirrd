@@ -4,8 +4,13 @@ const express = require("express");
 const setupAuthMiddlewares = require("./auth");
 const app = express();
 const port = 3001;
+const { connect } = require("./database");
+
+const cocktailsRouter = require("./cocktails");
 
 setupAuthMiddlewares(app);
+
+app.use("/api/cocktails", cocktailsRouter);
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
@@ -22,6 +27,12 @@ app.get("/api/current-user", function (req, res) {
   });
 });
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
-});
+async function main() {
+  await connect();
+
+  app.listen(port, () => {
+    console.log(`Example app listening on port ${port}`);
+  });
+}
+
+main();
