@@ -6,6 +6,8 @@ import { AuthenticatedRoute } from "./auth/AuthenticatedRoute";
 import { AuthProvider } from "./auth/AuthContext";
 import LocationPage from "./pages/LocationPage";
 import CheckinPage from "./pages/CheckinPage";
+import MyCheckins from "./pages/MyCheckins";
+import Header from "./components/Header";
 
 function App() {
   return (
@@ -13,6 +15,7 @@ function App() {
       <GlobalStyles />
       <div>
         <AuthProvider>
+          <Header />
           <Routes>
             <Route
               path="/"
@@ -33,11 +36,20 @@ function App() {
               }
             />
             <Route
-              path="/checkin"
+              path="/checkin/:locationId"
               exact
               element={
                 // <AuthenticatedRoute>
                 <CheckinPage />
+                // </AuthenticatedRoute>
+              }
+            />
+            <Route
+              path="/my-checkins"
+              exact
+              element={
+                // <AuthenticatedRoute>
+                <MyCheckins />
                 // </AuthenticatedRoute>
               }
             />

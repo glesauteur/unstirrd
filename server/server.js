@@ -2,15 +2,22 @@
 
 const express = require("express");
 const setupAuthMiddlewares = require("./auth");
+const bodyParser = require("body-parser");
+
 const app = express();
 const port = 3001;
 const { connect } = require("./database");
 
 const cocktailsRouter = require("./cocktails");
+const checkinsRouter = require("./checkins");
 
 setupAuthMiddlewares(app);
 
+app.use(bodyParser.json());
+
 app.use("/api/cocktails", cocktailsRouter);
+
+app.use("/api/checkins", checkinsRouter);
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
