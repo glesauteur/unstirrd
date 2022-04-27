@@ -1,23 +1,41 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { AiFillStar } from "react-icons/ai";
 import { AiOutlineStar } from "react-icons/ai";
-
+import { AuthContext } from "../auth/AuthContext";
+import { useParams, useNavigate } from "react-router-dom";
 import CocktailsSearchBar from "../components/CocktailsSearchBar";
 
-const CheckinPage = ({ locationId }) => {
-  const [hover, setHover] = useState(false);
-
+const CheckinPage = () => {
   const [hoverRating, setHoverRating] = useState(0);
   const [rating, setRating] = useState(0);
+  const [cocktail, setCocktail] = useState("");
 
-  const handleSubmit = (e) => {
-    console.log("submit!");
+  const { user } = React.useContext(AuthContext);
+
+  let { locationId } = useParams();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        userId: user.id,
+        locationId,
+        cocktailId: cocktail,
+        rating,
+      }),
+    };
+    const response = await fetch("/api/checkins", requestOptions);
+    const data = await response.json();
   };
 
   const stars = [1, 2, 3, 4, 5].map((r) => {
     return (
       <Star
+        key={r}
         onMouseEnter={() => setHoverRating(r)}
         onMouseLeave={() => setHoverRating(0)}
         onClick={() => setRating(r)}
@@ -37,7 +55,7 @@ const CheckinPage = ({ locationId }) => {
             <hr />
             <Cocktail>
               <Title>What did you drink?</Title>
-              <CocktailsSearchBar />
+              <CocktailsSearchBar setCocktail={setCocktail} />
               <Title>How was it?</Title>
               <RatingContainer>{stars}</RatingContainer>
             </Cocktail>
@@ -59,7 +77,7 @@ const Container = styled.div`
 `;
 
 const CheckinWrapper = styled.div`
-  height: 500px;
+  height: 350px;
   width: 500px;
   background-color: white;
   border-radius: 10px;

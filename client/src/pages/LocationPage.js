@@ -13,7 +13,7 @@ const LocationPage = () => {
   const navigate = useNavigate();
 
   const handleCheckin = () => {
-    navigate(`/checkin`);
+    navigate(`/checkin/${locationId}`);
   };
   // useEffect(() => {
   //   const options = {
@@ -34,13 +34,8 @@ const LocationPage = () => {
   //   return <div>...</div>;
   // }
 
-  const openModal = () => {
-    setShowModal((prev) => !prev);
-  };
-
   return (
     <>
-      <CheckinPage locationId={locationId} />
       <Container>
         <LocationWrapper>
           <Name>Darling</Name>

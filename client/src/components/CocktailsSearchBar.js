@@ -5,12 +5,12 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 import { debounce } from "../utils";
 
-const CocktailsSearchBar = () => {
+const CocktailsSearchBar = ({ setCocktail }) => {
   const [searchValue, setSearchValue] = useState(null);
   const [searchResults, setSearchResults] = useState(null);
 
   const [isFocused, setIsFocused] = useState(false);
-  const [input, setInput] = useState("allo");
+  const [input, setInput] = useState("");
 
   useEffect(() => {
     fetch(`/api/cocktails?q=${searchValue}`)
@@ -25,8 +25,11 @@ const CocktailsSearchBar = () => {
     cocktailList = searchResults.map((cocktail) => {
       return (
         <Cocktail
+          key={cocktail._id}
           onClick={() => {
+            console.log(cocktail);
             setInput(cocktail.drinkName);
+            setCocktail(cocktail._id);
           }}
           key={cocktail.drinkId}
         >
@@ -129,7 +132,8 @@ const Input = styled.input`
   border-radius: 10px;
   background-color: transparent;
   width: 90%;
-  color: #cdcdd2;
+  color: #043132;
+  font-size: 22px;
   :focus {
     outline: none;
   }

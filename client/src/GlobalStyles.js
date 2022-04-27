@@ -5,6 +5,7 @@ export const breakpoints = { tablet: "769px" };
 export default createGlobalStyle`
     :root {
       --primary-color: #FF3C00;
+      height: 100vh;
     }
 
     html, body, div, span, applet, object, iframe,
@@ -34,7 +35,7 @@ export default createGlobalStyle`
         display: block;
     }
     body {
-      /* height: 100vh; */
+
   background-image: linear-gradient(
     180deg,
     hsl(14deg 100% 50%) 0%,
@@ -61,7 +62,7 @@ export default createGlobalStyle`
         content: none;
     }
     h1, h2, h3 {
-      color: var(--primary-color);
+      color: #043132;
       font-family: var(--heading-font-family);
       font-size: 25px;
     }
