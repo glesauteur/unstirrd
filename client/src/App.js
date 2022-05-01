@@ -8,6 +8,8 @@ import LocationPage from "./pages/LocationPage";
 import CheckinPage from "./pages/CheckinPage";
 import MyCheckins from "./pages/MyCheckins";
 import Header from "./components/Header";
+import UnstirrdLogo from "./Unstirrd.png";
+import LocationCheckins from "./pages/LocationCheckins";
 
 function App() {
   return (
@@ -15,7 +17,7 @@ function App() {
       <GlobalStyles />
       <div>
         <AuthProvider>
-          <Header />
+          <Header UnstirrdLogo={UnstirrdLogo} />
           <Routes>
             <Route
               path="/"
@@ -50,6 +52,15 @@ function App() {
               element={
                 // <AuthenticatedRoute>
                 <MyCheckins />
+                // </AuthenticatedRoute>
+              }
+            />
+            <Route
+              path="/location/checkins/:locationId"
+              exact
+              element={
+                // <AuthenticatedRoute>
+                <LocationCheckins />
                 // </AuthenticatedRoute>
               }
             />

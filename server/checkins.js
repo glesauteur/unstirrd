@@ -19,6 +19,28 @@ router.post("/", async (req, res) => {
 
   const data = await db.collection("checkins").insertOne(checkin);
 
+  const locationData = await fetch(
+    `https://api.foursquare.com/v3/places/${req.body.locationId}`,
+    {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        Authorization: FS_TOKEN,
+      },
+    }
+  );
+
+  const location = await locationData.json();
+
+  const result = await db.collection("locations").findOneAndUpdate(
+    { locationFsId: req.body.locationId },
+    {
+      $set: { locationFsId: req.body.locationId, assignment: 5 },
+      $inc: { numberOfCheckins: 1 },
+    },
+    { upsert: true, returnOriginal: false }
+  );
+
   res.status(200).json({ checkin: checkin });
 });
 
@@ -64,8 +86,6 @@ router.get("/", async (req, res) => {
       );
 
       const location = await res.json();
-
-      console.log(location);
 
       return {
         rating: checkin.rating,

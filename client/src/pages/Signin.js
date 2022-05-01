@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import logo from "../assets/Unstirrd.svg";
+import logo from "../assets/Unstirrd-square.svg";
 import googleLogo from "../assets/Google__G__Logo.svg";
 
 const Signin = () => {
@@ -9,7 +9,7 @@ const Signin = () => {
   };
 
   return (
-    <Wrapper>
+    <>
       <SignInWrapper>
         <SignInBox>
           <Logo src={logo} />
@@ -20,32 +20,14 @@ const Signin = () => {
           </GoogleButton>
         </SignInBox>
       </SignInWrapper>
-    </Wrapper>
+    </>
   );
 };
-
-const Wrapper = styled.div`
-  height: 100vh;
-  background-image: linear-gradient(
-    180deg,
-    hsl(14deg 100% 50%) 0%,
-    hsl(13deg 100% 56%) 11%,
-    hsl(13deg 100% 59%) 22%,
-    hsl(14deg 100% 63%) 34%,
-    hsl(14deg 100% 66%) 45%,
-    hsl(14deg 100% 69%) 56%,
-    hsl(14deg 100% 72%) 67%,
-    hsl(14deg 100% 76%) 78%,
-    hsl(14deg 100% 79%) 89%,
-    hsl(14deg 100% 82%) 100%
-  );
-`;
 
 const SignInWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
 `;
 
 const SignInBox = styled.div`

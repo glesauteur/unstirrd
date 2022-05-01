@@ -2,20 +2,23 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-import CheckinPage from "./CheckinPage";
-
 const LocationPage = () => {
   let { locationId } = useParams();
 
-  const [location, setLocation] = useState(null);
-  const [showModal, setShowModal] = useState(false);
+  const [numberOfCheckins, setNumberOfCheckins] = useState(0);
+  const [locationAverageRating, setLocationAverageRating] = useState(0);
 
   const navigate = useNavigate();
 
   const handleCheckin = () => {
     navigate(`/checkin/${locationId}`);
   };
+
+  const handleClick = () => {
+    navigate(`/location/checkins/${locationId}`);
+  };
   // useEffect(() => {
+
   //   const options = {
   //     method: "GET",
   //     headers: {
@@ -34,6 +37,23 @@ const LocationPage = () => {
   //   return <div>...</div>;
   // }
 
+  useEffect(() => {
+    const findLocationNumOfCheckins = async function () {
+      const response = await fetch(`/api/locations/${locationId}`);
+      const data = await response.json();
+      setNumberOfCheckins(data.totalCheckins);
+    };
+
+    const findLocationRatings = async function () {
+      const response = await fetch(`/api/locations/${locationId}`);
+      const data = await response.json();
+      setLocationAverageRating(data.averageRating);
+    };
+
+    findLocationNumOfCheckins();
+    findLocationRatings();
+  }, []);
+
   return (
     <>
       <Container>
@@ -44,8 +64,13 @@ const LocationPage = () => {
           <hr />
           <ReviewsContainer>
             <ReviewsTitle>Reviews</ReviewsTitle>
-            <Average>Average review is 4/5</Average>
-            <TotalReviews>This place has 10 reviews</TotalReviews>
+            <Average>Average review is {locationAverageRating} / 5</Average>
+            <TotalReviews>
+              This place has{" "}
+              <ReviewsButton onClick={handleClick}>
+                {numberOfCheckins} reviews
+              </ReviewsButton>
+            </TotalReviews>
           </ReviewsContainer>
           <IframeContainer>
             <Iframe
@@ -70,7 +95,6 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
 `;
 
 const LocationWrapper = styled.div`
@@ -113,6 +137,11 @@ const Average = styled.p`
 
 const TotalReviews = styled.div`
   margin-top: 5px;
+`;
+
+const ReviewsButton = styled.span`
+  font-weight: 900;
+  cursor: pointer;
 `;
 
 const IframeContainer = styled.div`
