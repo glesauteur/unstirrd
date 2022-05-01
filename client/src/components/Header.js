@@ -2,9 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
-import MyCheckins from "../pages/MyCheckins";
-
-const Header = () => {
+const Header = ({ UnstirrdLogo }) => {
   const navigate = useNavigate();
 
   async function logout() {
@@ -19,27 +17,45 @@ const Header = () => {
     navigate(`/my-checkins`);
   };
 
+  const handleHomepage = () => {
+    navigate(`/`);
+  };
+
   return (
     <>
-      <LogoutContainer>
-        <MyCheckinsButton onClick={handleCheckins}>
-          My Checkins
-        </MyCheckinsButton>
-        <LogoutButton onClick={logout}>Logout</LogoutButton>
-      </LogoutContainer>
+      <HeaderContainer>
+        <Logo src={UnstirrdLogo} onClick={handleHomepage} />
+        <ButtonsContainer>
+          <MyCheckinsButton onClick={handleCheckins}>
+            My Checkins
+          </MyCheckinsButton>
+          <LogoutButton onClick={logout}>Logout</LogoutButton>
+        </ButtonsContainer>
+      </HeaderContainer>
     </>
   );
 };
 
-const LogoutContainer = styled.div`
+const HeaderContainer = styled.div`
   display: flex;
-  justify-content: flex-end;
-  margin-top: 10px;
+  justify-content: space-between;
+  margin-top: 20px;
   align-items: center;
-  margin-right: 30px;
-  gap: 40px;
+  margin-bottom: 20px;
 `;
 
+const Logo = styled.img`
+  width: 20%;
+  align-content: center;
+  margin-left: 30px;
+  cursor: pointer;
+`;
+
+const ButtonsContainer = styled.div`
+  display: flex;
+  margin-right: 30px;
+  gap: 20px;
+`;
 const LogoutButton = styled.button`
   border-style: none;
   border-radius: 5px;
@@ -49,7 +65,7 @@ const LogoutButton = styled.button`
 `;
 
 const MyCheckinsButton = styled.div`
-  padding: 5px 10px;
+  padding: 5px 8px;
   cursor: pointer;
   color: white;
   font-weight: 900;

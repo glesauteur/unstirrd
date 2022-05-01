@@ -1,31 +1,26 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
 
 import { AiFillStar } from "react-icons/ai";
 import { AiOutlineStar } from "react-icons/ai";
 
-const MyCheckin = ({ myCheckin, locationId }) => {
-  const navigate = useNavigate();
+const LocationCheckin = ({ locationCheckin, locationId }) => {
   const stars = [1, 2, 3, 4, 5].map((r) => {
     return (
       <Star key={r}>
-        {myCheckin.rating >= r ? <AiFillStar /> : <AiOutlineStar />}
+        {locationCheckin.rating >= r ? <AiFillStar /> : <AiOutlineStar />}
       </Star>
     );
   });
 
-  const handleLocation = () => {
-    navigate(`/location/${locationId}`);
-  };
   return (
     <CheckinsWrapper>
-      <Name onClick={handleLocation}>{myCheckin.location.name}</Name>
-      <Location>{myCheckin.location.location.formatted_address}</Location>
       <Cocktail>
-        <strong>Rated Cocktail:</strong> {myCheckin.cocktail[0].drinkName} (
-        {myCheckin.cocktail[0].drinkCategory})
+        <strong>Rated Cocktail:</strong> {locationCheckin.cocktail[0].drinkName}{" "}
+        ({locationCheckin.cocktail[0].drinkCategory})
       </Cocktail>
+      <p>{locationCheckin.user[0].email}</p>
+
       <Rating>{stars}</Rating>
     </CheckinsWrapper>
   );
@@ -44,6 +39,7 @@ const Name = styled.p`
   margin-top: 10px;
   font-weight: 900;
   font-size: 20px;
+  color: black;
 `;
 
 const Location = styled.p`
@@ -70,4 +66,4 @@ const Star = styled.span`
   }
 `;
 
-export default MyCheckin;
+export default LocationCheckin;

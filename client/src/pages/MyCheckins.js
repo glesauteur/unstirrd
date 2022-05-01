@@ -8,6 +8,7 @@ const MyCheckins = () => {
     {
       cocktail: [{ drinkName: "French Negroni", drinkCategory: "Cocktail" }],
       location: {
+        fsq_id: "58c8b974951e7d7e08bc6fd8",
         categories: [{ name: "Lounge" }, { name: "Restaurant" }],
         location: {
           formatted_address:
@@ -20,6 +21,7 @@ const MyCheckins = () => {
     {
       cocktail: [{ drinkName: "Vieux Carre", drinkCategory: "Cocktail" }],
       location: {
+        fsq_id: "58c8b974951e7d7e08bc6fd8",
         categories: [{ name: "Lounge" }, { name: "Bar" }],
         location: {
           formatted_address:
@@ -32,6 +34,7 @@ const MyCheckins = () => {
     {
       cocktail: [{ drinkName: "Old Fashioned", drinkCategory: "Cocktail" }],
       location: {
+        fsq_id: "58c8b974951e7d7e08bc6fd8",
         categories: [{ name: "Restaurant" }, { name: "Bar" }],
         location: {
           formatted_address:
@@ -44,6 +47,7 @@ const MyCheckins = () => {
     {
       cocktail: [{ drinkName: "Last Word", drinkCategory: "Cocktail" }],
       location: {
+        fsq_id: "58c8b974951e7d7e08bc6fd8",
         categories: [{ name: "Bar" }],
         location: {
           formatted_address:
@@ -63,8 +67,20 @@ const MyCheckins = () => {
   //   }, []);
 
   const allMyCheckins = myCheckins.map((myCheckin) => {
-    return <MyCheckin myCheckin={myCheckin}></MyCheckin>;
+    return (
+      <MyCheckin
+        locationId={myCheckin.location.fsq_id}
+        myCheckin={myCheckin}
+      ></MyCheckin>
+    );
   });
+
+  //   useEffect(() => {
+  //     fetch(`/api/checkins`)
+  //       .then((response) => response.json())
+  //       .then((response) => setMyCheckins(response.checkins))
+  //       .catch((err) => console.error(err));
+  //   }, []);
 
   return (
     <>
@@ -77,10 +93,12 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
   flex-direction: column;
   gap: 30px;
-  margin-top: 15px;
+
+  :last-child {
+    margin-bottom: 30px;
+  }
 `;
 
 export default MyCheckins;

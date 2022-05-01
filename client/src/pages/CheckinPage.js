@@ -5,11 +5,13 @@ import { AiOutlineStar } from "react-icons/ai";
 import { AuthContext } from "../auth/AuthContext";
 import { useParams, useNavigate } from "react-router-dom";
 import CocktailsSearchBar from "../components/CocktailsSearchBar";
+import NewCocktail from "../components/NewCocktail";
 
 const CheckinPage = () => {
   const [hoverRating, setHoverRating] = useState(0);
   const [rating, setRating] = useState(0);
-  const [cocktail, setCocktail] = useState("");
+  const [cocktail, setCocktail] = useState(null);
+  const [newCocktail, setNewCocktail] = useState(false);
 
   const { user } = React.useContext(AuthContext);
 
@@ -45,6 +47,14 @@ const CheckinPage = () => {
     );
   });
 
+  const handleNewCocktail = () => {
+    if (newCocktail) {
+      setNewCocktail(false);
+    } else {
+      setNewCocktail(true);
+    }
+  };
+
   return (
     <>
       <Container>
@@ -56,6 +66,11 @@ const CheckinPage = () => {
             <Cocktail>
               <Title>What did you drink?</Title>
               <CocktailsSearchBar setCocktail={setCocktail} />
+              <CustomCocktail>
+                Had a custom cocktail? Add it
+                <ClickHere onClick={handleNewCocktail}> here</ClickHere>!
+                {newCocktail && <NewCocktail setCocktail={setCocktail} />}
+              </CustomCocktail>
               <Title>How was it?</Title>
               <RatingContainer>{stars}</RatingContainer>
             </Cocktail>
@@ -73,11 +88,9 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
 `;
 
 const CheckinWrapper = styled.div`
-  height: 350px;
   width: 500px;
   background-color: white;
   border-radius: 10px;
@@ -104,6 +117,16 @@ const Title = styled.h3`
   margin-top: 15px;
 `;
 
+const ClickHere = styled.span`
+  cursor: pointer;
+  font-weight: 900;
+`;
+
+const CustomCocktail = styled.p`
+  padding-top: 10px;
+  font-size: 14px;
+`;
+
 const RatingContainer = styled.div`
   margin-top: 10px;
 `;
@@ -115,6 +138,7 @@ const CheckinContainer = styled.div`
 const SubmitReview = styled.button`
   width: 100%;
   margin-top: 30px;
+  margin-bottom: 30px;
   background-color: var(--primary-color);
   color: white;
   border-style: none;
@@ -132,7 +156,6 @@ const Star = styled.span`
   cursor: pointer;
   font-size: 30px;
   color: var(--primary-color);
-
   :hover {
     color: var(--primary-color);
   }

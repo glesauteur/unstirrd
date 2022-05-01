@@ -5,7 +5,7 @@ export const breakpoints = { tablet: "769px" };
 export default createGlobalStyle`
     :root {
       --primary-color: #FF3C00;
-      height: 100vh;
+      height: 100%;
     }
 
     html, body, div, span, applet, object, iframe,
@@ -35,19 +35,23 @@ export default createGlobalStyle`
         display: block;
     }
     body {
-
-  background-image: linear-gradient(
-    180deg,
-    hsl(14deg 100% 50%) 0%,
-    hsl(13deg 100% 56%) 11%,
-    hsl(13deg 100% 59%) 22%,
-    hsl(14deg 100% 63%) 34%,
-    hsl(14deg 100% 66%) 45%,
-    hsl(14deg 100% 69%) 56%,
-    hsl(14deg 100% 72%) 67%,
-    hsl(14deg 100% 76%) 78%,
-    hsl(14deg 100% 79%) 89%,
-    hsl(14deg 100% 82%) 100%
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: cover;
+      background-image: 
+       linear-gradient(
+          180deg,
+          hsl(14deg 100% 50%) 0%,
+          hsl(13deg 100% 56%) 11%,
+          hsl(13deg 100% 59%) 22%,
+          hsl(14deg 100% 63%) 34%,
+          hsl(14deg 100% 66%) 45%,
+          hsl(14deg 100% 69%) 56%,
+          hsl(14deg 100% 72%) 67%,
+          hsl(14deg 100% 76%) 78%,
+          hsl(14deg 100% 79%) 89%,
+          hsl(14deg 100% 82%) 100%
   );
     }
     ol, ul {

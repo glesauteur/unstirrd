@@ -10,6 +10,7 @@ const { connect } = require("./database");
 
 const cocktailsRouter = require("./cocktails");
 const checkinsRouter = require("./checkins");
+const locationsRouter = require("./locations");
 
 setupAuthMiddlewares(app);
 
@@ -18,6 +19,8 @@ app.use(bodyParser.json());
 app.use("/api/cocktails", cocktailsRouter);
 
 app.use("/api/checkins", checkinsRouter);
+
+app.use("/api/locations", locationsRouter);
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
