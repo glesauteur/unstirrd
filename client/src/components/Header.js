@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../auth/AuthContext";
 
 const Header = ({ UnstirrdLogo }) => {
+  const { user } = React.useContext(AuthContext);
   const navigate = useNavigate();
+
+  const [hamburgerClicked, setHamburgerClicked] = useState(false);
+  const [hamburger, setHamburger] = useState(false);
 
   async function logout() {
     const res = await fetch("/api/auth/logout", { method: "POST" });
@@ -14,22 +19,61 @@ const Header = ({ UnstirrdLogo }) => {
   }
 
   const handleCheckins = () => {
-    navigate(`/my-checkins`);
+    navigate(`profile/${user.id}/checkins`);
   };
 
   const handleHomepage = () => {
     navigate(`/`);
   };
 
+  const handleProfile = () => {
+    navigate(`/my-profile`);
+  };
+
+  const handleHamburgerClick = () => {
+    if (hamburgerClicked) {
+      setHamburgerClicked(false);
+    } else {
+      setHamburgerClicked(true);
+    }
+  };
+
   return (
     <>
       <HeaderContainer>
-        <Logo src={UnstirrdLogo} onClick={handleHomepage} />
+        <LogoContainer>
+          <Logo src={UnstirrdLogo} onClick={handleHomepage} />
+        </LogoContainer>
         <ButtonsContainer>
-          <MyCheckinsButton onClick={handleCheckins}>
-            My Checkins
-          </MyCheckinsButton>
-          <LogoutButton onClick={logout}>Logout</LogoutButton>
+          <MobileMenu>
+            <MenuIcon onClick={handleHamburgerClick}>
+              <Span></Span>
+              <Span></Span>
+              <Span></Span>
+            </MenuIcon>
+            {hamburgerClicked && (
+              <NavMenu>
+                <MyCheckinsButton onClick={handleCheckins}>
+                  My Checkins
+                </MyCheckinsButton>
+                <MyProfileButton onClick={handleProfile}>
+                  Profile
+                </MyProfileButton>
+                <LogoutButton onClick={logout}>Logout</LogoutButton>
+              </NavMenu>
+            )}
+          </MobileMenu>
+          <DesktopMenu>
+            <DesktopMenuContainer>
+              <DesktopMyCheckinsButton onClick={handleCheckins}>
+                My Checkins
+              </DesktopMyCheckinsButton>
+              <DesktopMyProfileButton onClick={handleProfile}>
+                Profile
+              </DesktopMyProfileButton>
+              <DesktopLogoutButton onClick={logout}>Logout</DesktopLogoutButton>
+            </DesktopMenuContainer>
+          </DesktopMenu>
         </ButtonsContainer>
       </HeaderContainer>
     </>
@@ -37,42 +81,130 @@ const Header = ({ UnstirrdLogo }) => {
 };
 
 const HeaderContainer = styled.div`
+  margin: 20px;
+  align-items: flex-start;
   display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
-  align-items: center;
-  margin-bottom: 20px;
 `;
 
+const LogoContainer = styled.div``;
+
 const Logo = styled.img`
-  width: 20%;
-  align-content: center;
-  margin-left: 30px;
+  width: 40%;
+  position: fixed;
   cursor: pointer;
+  @media (min-width: 1200px) {
+    width: 10%;
+  }
+  @media (min-width: 768px) and (max-width: 1024px) {
+    width: 20%;
+  }
 `;
 
 const ButtonsContainer = styled.div`
-  display: flex;
-  margin-right: 30px;
-  gap: 20px;
+  width: 100%;
 `;
-const LogoutButton = styled.button`
-  border-style: none;
-  border-radius: 5px;
-  background-color: white;
-  padding: 8px 10px;
+
+const MobileMenu = styled.div`
   cursor: pointer;
+  display: none;
+  @media (max-width: 1024px) {
+    display: block;
+  }
+`;
+
+const DesktopMenu = styled.div`
+  cursor: pointer;
+  display: none;
+  @media (min-width: 1025px) {
+    display: block;
+  }
+`;
+
+const DesktopMenuContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  gap: 25px;
+`;
+
+const MenuIcon = styled.div`
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+`;
+
+const Span = styled.div`
+  width: 35px;
+  height: 5px;
+  background-color: white;
+  margin: 3px 0;
+  transition: 0.4s;
+  border-radius: 5px;
+  display: block;
+`;
+
+const NavMenu = styled.div``;
+
+const LogoutButton = styled.div`
+  border-style: none;
+  background-color: white;
+  cursor: pointer;
+  font-size: 15px;
+  text-align: center;
+  padding-left: 5px;
+  padding-bottom: 4px;
+  :hover {
+    background-color: #ffb8a2;
+  }
 `;
 
 const MyCheckinsButton = styled.div`
-  padding: 5px 8px;
   cursor: pointer;
+  padding-top: 4px;
+  text-align: center;
+  background-color: white;
+  padding-left: 5px;
+  font-size: 15px;
+  :hover {
+    background-color: #ffb8a2;
+  }
+`;
+
+const DesktopLogoutButton = styled.div`
   color: white;
+  font-size: 20px;
   font-weight: 900;
   :hover {
-    border-style: solid;
-    border-color: white;
-    border-width: 1px;
+    transform: scale(1.2);
+  }
+`;
+
+const DesktopMyCheckinsButton = styled.div`
+  color: white;
+  font-size: 20px;
+  font-weight: 900;
+  :hover {
+    transform: scale(1.1);
+  }
+`;
+
+const DesktopMyProfileButton = styled.div`
+  color: white;
+  font-size: 20px;
+  font-weight: 900;
+  :hover {
+    transform: scale(1.2);
+  }
+`;
+
+const MyProfileButton = styled.div`
+  cursor: pointer;
+  padding-left: 5px;
+  background-color: white;
+  text-align: center;
+  font-size: 15px;
+  :hover {
+    background-color: #ffb8a2;
   }
 `;
 

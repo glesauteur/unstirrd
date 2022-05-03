@@ -127,7 +127,7 @@ const InputContainer = styled.div`
   width: 100%;
   box-shadow: ${(props) => (props.input ? "6px 9px 6px lightgray" : "none")};
   transition: ${(props) => (props.input ? "0.2s" : "0.2s")};
-  width: ${(props) => (props.input ? "450px" : "400px")};
+  width: ${(props) => (props.input ? "450px" : "350px")};
   height: ${(props) => (props.input ? "56px" : "50px")};
   border-bottom-left-radius: ${(props) =>
     props.searchResults ? "0px" : "10px"};

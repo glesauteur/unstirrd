@@ -3,9 +3,11 @@ import styled from "styled-components";
 import { useParams, useNavigate } from "react-router-dom";
 
 import LocationCheckin from "../components/LocationCheckin";
+import { AiTwotoneExclamationCircle } from "react-icons/ai";
 
 const LocationCheckins = () => {
   const [locationCheckins, setlocationCheckins] = useState([]);
+  const [locationName, setLocationName] = useState("");
 
   let { locationId } = useParams();
 
@@ -16,26 +18,30 @@ const LocationCheckins = () => {
       setlocationCheckins(data.locationCocktails);
     };
 
+    const findLocationName = async function () {
+      const response = await fetch(`/api/locations/${locationId}`);
+      const data = await response.json();
+      setLocationName(data.name);
+    };
+
+    findLocationName();
     findLocationCheckins();
   }, []);
-
-  console.log(locationCheckins);
-  // if (!locationCheckins) {
-  //   return <div>loading..</div>;
-  // }
 
   const allLocationCheckins = locationCheckins.map((locationCheckin) => {
     return (
       <LocationCheckin
-        locationId={locationId}
+        locationId={locationCheckin.locationFsId}
         locationCheckin={locationCheckin}
       ></LocationCheckin>
     );
   });
 
+  console.log(allLocationCheckins);
+
   return (
     <>
-      <p>location reviews</p>
+      <Title>{locationName}'s reviews</Title>
       <Container>{allLocationCheckins}</Container>
     </>
   );
@@ -47,10 +53,17 @@ const Container = styled.div`
   align-items: center;
   flex-direction: column;
   gap: 30px;
-
   :last-child {
     margin-bottom: 30px;
   }
+`;
+
+const Title = styled.h2`
+  color: white;
+  text-align: center;
+  padding-top: 20px;
+  font-size: 25px;
+  padding-bottom: 20px;
 `;
 
 export default LocationCheckins;

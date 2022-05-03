@@ -7,6 +7,53 @@ const LocationPage = () => {
 
   const [numberOfCheckins, setNumberOfCheckins] = useState(0);
   const [locationAverageRating, setLocationAverageRating] = useState(0);
+  const [location, setLocation] = useState({
+    fsq_id: "58c8b974951e7d7e08bc6fd8",
+    categories: [
+      {
+        id: 13016,
+        name: "Bar lounge",
+        icon: {
+          prefix: "https://ss3.4sqi.net/img/categories_v2/nightlife/default_",
+          suffix: ".png",
+        },
+      },
+      {
+        id: 13065,
+        name: "Restaurant",
+        icon: {
+          prefix: "https://ss3.4sqi.net/img/categories_v2/food/default_",
+          suffix: ".png",
+        },
+      },
+    ],
+    chains: [],
+    geocodes: {
+      main: {
+        latitude: 45.518853,
+        longitude: -73.583915,
+      },
+      roof: {
+        latitude: 45.518853,
+        longitude: -73.583915,
+      },
+    },
+    link: "/v3/places/58c8b974951e7d7e08bc6fd8",
+    location: {
+      address: "4328 Saint-Laurent Blvd",
+      country: "CA",
+      cross_street: "Marie-Anne",
+      formatted_address:
+        "4328 Saint-Laurent Blvd (Marie-Anne), Montréal QC H2W 1Z3",
+      locality: "Montréal",
+      neighborhood: ["Plateau Mont-Royal"],
+      postcode: "H2W 1Z3",
+      region: "QC",
+    },
+    name: "Darling",
+    related_places: {},
+    timezone: "America/Toronto",
+  });
 
   const navigate = useNavigate();
 
@@ -15,7 +62,7 @@ const LocationPage = () => {
   };
 
   const handleClick = () => {
-    navigate(`/location/checkins/${locationId}`);
+    navigate(`/location/${locationId}/checkins`);
   };
   // useEffect(() => {
 
@@ -54,17 +101,29 @@ const LocationPage = () => {
     findLocationRatings();
   }, []);
 
+  const locationCategories = location.categories.map((locationCategorie) => {
+    return (
+      <>
+        <div key={location.fsq_id}>{locationCategorie.name} </div>
+        <span> / </span>
+      </>
+    );
+  });
+
   return (
     <>
       <Container>
         <LocationWrapper>
-          <Name>Darling</Name>
-          <Categories>Restaurant / Bar</Categories>
-          <Address>1862 Blvd de Maisonneuve O, Montréal QC H3H 1J8</Address>
+          <Name>{location.name}</Name>
+
+          <Categories>{locationCategories}</Categories>
+          <Address>{location.location.formatted_address}</Address>
           <hr />
           <ReviewsContainer>
             <ReviewsTitle>Reviews</ReviewsTitle>
-            <Average>Average review is {locationAverageRating} / 5</Average>
+            {numberOfCheckins > 0 && (
+              <Average>Average review is {locationAverageRating} / 5</Average>
+            )}
             <TotalReviews>
               This place has{" "}
               <ReviewsButton onClick={handleClick}>
@@ -104,6 +163,9 @@ const LocationWrapper = styled.div`
   border-radius: 10px;
   padding: 0 15px;
   box-shadow: 3px 3px 3px #ff855f;
+  @media (max-width: 768px) {
+    width: 300px;
+  }
 `;
 
 const Name = styled.h2`
@@ -112,9 +174,13 @@ const Name = styled.h2`
 
 const Categories = styled.div`
   margin-top: 5px;
+  display: flex;
   font-style: italic;
   font-size: 15px;
   font-weight: 900;
+  span:last-child {
+    display: none;
+  }
 `;
 
 const Address = styled.p`

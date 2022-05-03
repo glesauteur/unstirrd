@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { AiFillStar } from "react-icons/ai";
 import { AiOutlineStar } from "react-icons/ai";
 
-const LocationCheckin = ({ locationCheckin, locationId }) => {
+const LocationCheckin = ({ locationCheckin }) => {
+  const navigate = useNavigate();
+  const handleUserClick = () => {
+    let userId = locationCheckin.user[0]._id;
+    navigate(`/profile/${userId}/checkins`);
+  };
   const stars = [1, 2, 3, 4, 5].map((r) => {
     return (
       <Star key={r}>
@@ -19,7 +25,12 @@ const LocationCheckin = ({ locationCheckin, locationId }) => {
         <strong>Rated Cocktail:</strong> {locationCheckin.cocktail[0].drinkName}{" "}
         ({locationCheckin.cocktail[0].drinkCategory})
       </Cocktail>
-      <p>{locationCheckin.user[0].email}</p>
+      <User>
+        <strong>By:</strong>{" "}
+        <UserName onClick={handleUserClick}>
+          {locationCheckin.user[0].name}
+        </UserName>
+      </User>
 
       <Rating>{stars}</Rating>
     </CheckinsWrapper>
@@ -28,29 +39,32 @@ const LocationCheckin = ({ locationCheckin, locationId }) => {
 
 const CheckinsWrapper = styled.div`
   height: 150px;
-  width: 400px;
+  width: 300px;
   background-color: white;
   border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   padding: 0 15px;
   box-shadow: 3px 3px 3px #ff855f;
-`;
-
-const Name = styled.p`
-  margin-top: 10px;
-  font-weight: 900;
-  font-size: 20px;
-  color: black;
-`;
-
-const Location = styled.p`
-  font-size: 13px;
-  color: gray;
-  margin-top: 5px;
 `;
 
 const Cocktail = styled.p`
   font-size: 15px;
   margin-top: 15px;
+`;
+
+const User = styled.p`
+  font-size: 15px;
+  margin-top: 5px;
+`;
+
+const UserName = styled.span`
+  cursor: pointer;
+  :hover {
+    font-weight: 900;
+    color: var(--primary-color);
+  }
 `;
 
 const Rating = styled.p`

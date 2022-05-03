@@ -5,12 +5,12 @@ import { useNavigate } from "react-router-dom";
 import { AiFillStar } from "react-icons/ai";
 import { AiOutlineStar } from "react-icons/ai";
 
-const MyCheckin = ({ myCheckin, locationId }) => {
+const UserCheckin = ({ userCheckin, locationId }) => {
   const navigate = useNavigate();
   const stars = [1, 2, 3, 4, 5].map((r) => {
     return (
       <Star key={r}>
-        {myCheckin.rating >= r ? <AiFillStar /> : <AiOutlineStar />}
+        {userCheckin.rating >= r ? <AiFillStar /> : <AiOutlineStar />}
       </Star>
     );
   });
@@ -20,11 +20,11 @@ const MyCheckin = ({ myCheckin, locationId }) => {
   };
   return (
     <CheckinsWrapper>
-      <Name onClick={handleLocation}>{myCheckin.location.name}</Name>
-      <Location>{myCheckin.location.location.formatted_address}</Location>
+      <Name onClick={handleLocation}>{userCheckin.location.name}</Name>
+      <Location>{userCheckin.location.location.formatted_address}</Location>
       <Cocktail>
-        <strong>Rated Cocktail:</strong> {myCheckin.cocktail[0].drinkName} (
-        {myCheckin.cocktail[0].drinkCategory})
+        <strong>Rated Cocktail:</strong> {userCheckin.cocktail[0].drinkName} (
+        {userCheckin.cocktail[0].drinkCategory})
       </Cocktail>
       <Rating>{stars}</Rating>
     </CheckinsWrapper>
@@ -32,10 +32,13 @@ const MyCheckin = ({ myCheckin, locationId }) => {
 };
 
 const CheckinsWrapper = styled.div`
-  height: 150px;
-  width: 400px;
+  height: 170px;
+  width: 300px;
   background-color: white;
   border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   padding: 0 15px;
   box-shadow: 3px 3px 3px #ff855f;
 `;
@@ -70,4 +73,4 @@ const Star = styled.span`
   }
 `;
 
-export default MyCheckin;
+export default UserCheckin;
