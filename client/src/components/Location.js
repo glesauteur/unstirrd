@@ -12,7 +12,7 @@ const Location = ({ location }) => {
     (locationCategorie) => {
       return (
         <>
-          <div key={location.place.fsq_id}>{locationCategorie.name}</div>
+          <div key={location.place.fsq_id}>{locationCategorie.name} </div>
           <span>/</span>
         </>
       );

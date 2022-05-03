@@ -39,7 +39,7 @@ router.get("/:locationFsId", async (req, res) => {
 });
 
 router.get("/:locationFsId/checkins", async (req, res) => {
-  // All cocktail reviews
+  // All cocktail reviews for a location
 
   const db = getDB();
 

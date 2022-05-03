@@ -42,11 +42,12 @@ const findOrCreateByGoogleId = async (profile) => {
         $setOnInsert: {
           googleId: profile.id,
           email: profile.emails[0].value,
+          name: profile.displayName,
         },
       },
       {
-        returnOriginal: false,
         upsert: true,
+        returnDocument: "after",
       }
     );
 

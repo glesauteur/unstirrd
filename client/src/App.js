@@ -6,10 +6,12 @@ import { AuthenticatedRoute } from "./auth/AuthenticatedRoute";
 import { AuthProvider } from "./auth/AuthContext";
 import LocationPage from "./pages/LocationPage";
 import CheckinPage from "./pages/CheckinPage";
-import MyCheckins from "./pages/MyCheckins";
+import UserCheckins from "./pages/UserCheckins";
 import Header from "./components/Header";
 import UnstirrdLogo from "./Unstirrd.png";
 import LocationCheckins from "./pages/LocationCheckins";
+import MyProfilePage from "./pages/MyProfilePage";
+import ProfilePage from "./pages/ProfilePage";
 
 function App() {
   return (
@@ -47,16 +49,34 @@ function App() {
               }
             />
             <Route
-              path="/my-checkins"
+              path="/profile/:userId/checkins"
               exact
               element={
                 // <AuthenticatedRoute>
-                <MyCheckins />
+                <UserCheckins />
                 // </AuthenticatedRoute>
               }
             />
             <Route
-              path="/location/checkins/:locationId"
+              path="/my-profile"
+              exact
+              element={
+                // <AuthenticatedRoute>
+                <MyProfilePage />
+                // </AuthenticatedRoute>
+              }
+            />
+            <Route
+              path="/profile/:userId"
+              exact
+              element={
+                // <AuthenticatedRoute>
+                <ProfilePage />
+                // </AuthenticatedRoute>
+              }
+            />
+            <Route
+              path="/location/:locationId/checkins"
               exact
               element={
                 // <AuthenticatedRoute>
