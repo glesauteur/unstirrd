@@ -14,7 +14,7 @@ const Header = ({ UnstirrdLogo }) => {
     const res = await fetch("/api/auth/logout", { method: "POST" });
 
     if (res.ok) {
-      window.location.href = "/";
+      window.location.href = "/signin";
     }
   }
 
@@ -28,6 +28,10 @@ const Header = ({ UnstirrdLogo }) => {
 
   const handleProfile = () => {
     navigate(`/my-profile`);
+  };
+
+  const handleHomefeed = () => {
+    navigate(`/homefeed`);
   };
 
   const handleHamburgerClick = () => {
@@ -53,6 +57,9 @@ const Header = ({ UnstirrdLogo }) => {
             </MenuIcon>
             {hamburgerClicked && (
               <NavMenu>
+                <HomefeedButton onClick={handleHomefeed}>
+                  Homefeed
+                </HomefeedButton>
                 <MyCheckinsButton onClick={handleCheckins}>
                   My Checkins
                 </MyCheckinsButton>
@@ -65,6 +72,9 @@ const Header = ({ UnstirrdLogo }) => {
           </MobileMenu>
           <DesktopMenu>
             <DesktopMenuContainer>
+              <DesktopHomefeedButton onClick={handleHomefeed}>
+                Homefeed
+              </DesktopHomefeedButton>
               <DesktopMyCheckinsButton onClick={handleCheckins}>
                 My Checkins
               </DesktopMyCheckinsButton>
@@ -170,6 +180,18 @@ const MyCheckinsButton = styled.div`
   }
 `;
 
+const HomefeedButton = styled.div`
+  cursor: pointer;
+  padding-top: 4px;
+  text-align: center;
+  background-color: white;
+  padding-left: 5px;
+  font-size: 15px;
+  :hover {
+    background-color: #ffb8a2;
+  }
+`;
+
 const DesktopLogoutButton = styled.div`
   color: white;
   font-size: 20px;
@@ -180,6 +202,15 @@ const DesktopLogoutButton = styled.div`
 `;
 
 const DesktopMyCheckinsButton = styled.div`
+  color: white;
+  font-size: 20px;
+  font-weight: 900;
+  :hover {
+    transform: scale(1.1);
+  }
+`;
+
+const DesktopHomefeedButton = styled.div`
   color: white;
   font-size: 20px;
   font-weight: 900;

@@ -12,6 +12,7 @@ import UnstirrdLogo from "./Unstirrd.png";
 import LocationCheckins from "./pages/LocationCheckins";
 import MyProfilePage from "./pages/MyProfilePage";
 import ProfilePage from "./pages/ProfilePage";
+import Homefeed from "./pages/Homefeed";
 
 function App() {
   return (
@@ -34,54 +35,63 @@ function App() {
               path="/location/:locationId"
               exact
               element={
-                // <AuthenticatedRoute>
-                <LocationPage />
-                // </AuthenticatedRoute>
+                <AuthenticatedRoute>
+                  <LocationPage />
+                </AuthenticatedRoute>
               }
             />
             <Route
               path="/checkin/:locationId"
               exact
               element={
-                // <AuthenticatedRoute>
-                <CheckinPage />
-                // </AuthenticatedRoute>
+                <AuthenticatedRoute>
+                  <CheckinPage />
+                </AuthenticatedRoute>
               }
             />
             <Route
               path="/profile/:userId/checkins"
               exact
               element={
-                // <AuthenticatedRoute>
-                <UserCheckins />
-                // </AuthenticatedRoute>
+                <AuthenticatedRoute>
+                  <UserCheckins />
+                </AuthenticatedRoute>
               }
             />
             <Route
               path="/my-profile"
               exact
               element={
-                // <AuthenticatedRoute>
-                <MyProfilePage />
-                // </AuthenticatedRoute>
+                <AuthenticatedRoute>
+                  <MyProfilePage />
+                </AuthenticatedRoute>
               }
             />
             <Route
               path="/profile/:userId"
               exact
               element={
-                // <AuthenticatedRoute>
-                <ProfilePage />
-                // </AuthenticatedRoute>
+                <AuthenticatedRoute>
+                  <ProfilePage />
+                </AuthenticatedRoute>
               }
             />
             <Route
               path="/location/:locationId/checkins"
               exact
               element={
-                // <AuthenticatedRoute>
-                <LocationCheckins />
-                // </AuthenticatedRoute>
+                <AuthenticatedRoute>
+                  <LocationCheckins />
+                </AuthenticatedRoute>
+              }
+            />
+            <Route
+              path="/homefeed"
+              exact
+              element={
+                <AuthenticatedRoute>
+                  <Homefeed />
+                </AuthenticatedRoute>
               }
             />
 
