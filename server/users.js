@@ -20,14 +20,14 @@ router.get("/:userId", async (req, res) => {
   res.status(200).json({ user });
 });
 
-router.get("/:userId/checkins", async (req, res) => {
+async function getCheckinsForUser(userId) {
   const db = getDB();
 
   const data = await db
     .collection("checkins")
     .aggregate([
       {
-        $match: { userId: ObjectId(req.params.userId) },
+        $match: { userId: ObjectId(userId) },
       },
       {
         $lookup: {
@@ -48,7 +48,7 @@ router.get("/:userId/checkins", async (req, res) => {
     ])
     .toArray();
 
-  const checkins = await Promise.all(
+  return Promise.all(
     data.map(async (checkin) => {
       const res = await fetch(
         `https://api.foursquare.com/v3/places/${checkin.locationFsId}`,
@@ -71,7 +71,10 @@ router.get("/:userId/checkins", async (req, res) => {
       };
     })
   );
+}
 
+router.get("/:userId/checkins", async (req, res) => {
+  const checkins = await getCheckinsForUser(req.params.userId);
   res.status(200).json({ checkins });
 });
 
@@ -115,6 +118,63 @@ router.delete("/:userId/unfollowing", async (req, res) => {
   });
 
   res.sendStatus(200);
+});
+
+router.get("/:userId/followers", async (req, res) => {
+  const db = getDB();
+
+  const id = req.params.userId;
+
+  const followers = await db
+    .collection("follows")
+    .aggregate([
+      {
+        $match: { to: ObjectId(id) },
+      },
+      {
+        $lookup: {
+          from: "users",
+          localField: "from",
+          foreignField: "_id",
+          as: "user",
+        },
+      },
+    ])
+    .toArray();
+
+  const withCheckins = await Promise.all(
+    followers.map(async (follower) => {
+      const checkins = await getCheckinsForUser(follower.from);
+      return { ...follower, checkins };
+    })
+  );
+
+  res.status(200).json({ followers: withCheckins });
+});
+
+router.get("/:userId/followings", async (req, res) => {
+  const db = getDB();
+
+  const id = req.params.userId;
+
+  const followings = await db
+    .collection("follows")
+    .aggregate([
+      {
+        $match: { from: ObjectId(id) },
+      },
+      {
+        $lookup: {
+          from: "users",
+          localField: "from",
+          foreignField: "_id",
+          as: "user",
+        },
+      },
+    ])
+    .toArray();
+
+  res.status(200).json({ followings });
 });
 
 module.exports = router;

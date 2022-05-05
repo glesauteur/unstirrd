@@ -136,7 +136,7 @@ const UserCheckins = () => {
   return (
     <>
       <InfoContainer>
-        <Title>{userInfo.name}'s Checkins</Title>
+        <Title>{userInfo.email}'s Checkins</Title>
         <FollowButtonContainer>
           {following ? (
             <FollowingButton onClick={handleUnfollow}>
