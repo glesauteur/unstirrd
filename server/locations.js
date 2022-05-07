@@ -1,13 +1,39 @@
 const express = require("express");
 const router = express.Router();
+const fetch = require("node-fetch");
 
 const { getDB } = require("./database");
+const { FS_TOKEN } = process.env;
 
 router.get("/search", async (req, res) => {
-  // ...
+  let searchValue = req.query.q;
+
+  const options = {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      Authorization: FS_TOKEN,
+    },
+  };
+
+  const response = await fetch(
+    `https://api.foursquare.com/v3/autocomplete?query=${searchValue}&ll=45.50%2C-73.56&radius=10000&limit=30&types=place`,
+    options
+  );
+
+  const data = await response.json();
+
+  const results = data.results.filter((result) => {
+    return result.place.categories.some((category) => {
+      return category.id >= 13000 && category.id < 14000;
+    });
+  });
+
+  res.status(200).json({ results: results });
 });
 
 router.get("/:locationFsId", async (req, res) => {
+  const locationFsId = req.params.locationFsId;
   const db = getDB();
 
   let totalRating = 0;
@@ -28,10 +54,27 @@ router.get("/:locationFsId", async (req, res) => {
   averageRating = parseFloat(totalRating / locationCheckins.length).toFixed(1);
 
   // get location details from FS
+  const options = {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      Authorization: FS_TOKEN,
+    },
+  };
+
+  const response = await fetch(
+    `https://api.foursquare.com/v3/places/${locationFsId}`,
+    options
+  );
+  const data = await response.json();
+
   res.status(200).json({
-    name: "Darling",
-    address: "...",
-    categories: [],
+    fsq_id: req.params.locationFsId,
+    name: data.name,
+    address: data.location.formatted_address,
+    latitude: data.geocodes.main.latitude,
+    longitude: data.geocodes.main.longitude,
+    categories: data.categories,
     averageRating: averageRating,
     checkins: locationCheckins,
     totalCheckins: locationCheckins.length,

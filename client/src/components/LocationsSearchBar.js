@@ -5,35 +5,43 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 import { debounce } from "../utils";
 
-const CocktailsSearchBar = ({ setCocktail }) => {
+const LocationsSearchBar = ({ setLocation }) => {
   const [searchValue, setSearchValue] = useState(null);
   const [searchResults, setSearchResults] = useState(null);
   const [isFocused, setIsFocused] = useState(false);
   const [input, setInput] = useState("");
 
   useEffect(() => {
-    fetch(`/api/cocktails?q=${searchValue}`)
-      .then((response) => response.json())
-      .then((response) => setSearchResults(response.cocktails))
-      .catch((err) => console.error(err));
+    const findLocations = async function () {
+      const response = await fetch(`/api/locations/search?q=${searchValue}`);
+      const data = await response.json();
+
+      setSearchResults(
+        data.results.filter((result) => {
+          return result.place.categories.some((category) => {
+            return category.id >= 13000 && category.id < 14000;
+          });
+        })
+      );
+    };
+    findLocations();
   }, [searchValue]);
 
-  let cocktailList;
+  let locationList;
 
   if (searchResults) {
-    cocktailList = searchResults.map((cocktail) => {
+    locationList = searchResults.map((location) => {
       return (
-        <Cocktail
-          key={cocktail._id}
+        <Location
+          key={location.place.fsq_id}
           onClick={() => {
-            console.log(cocktail);
-            setInput(cocktail.drinkName);
-            setCocktail(cocktail._id);
+            setInput(location.place.name);
+            setLocation(location.place.fsq_id);
           }}
-          key={cocktail.drinkId}
+          key={location.place.fsq_id}
         >
-          {cocktail.drinkName}
-        </Cocktail>
+          {location.place.name}
+        </Location>
       );
     });
   }
@@ -62,11 +70,13 @@ const CocktailsSearchBar = ({ setCocktail }) => {
     setInput(val);
   };
 
+  console.log(searchValue);
+
   return (
     <>
       <SearchContainer onClick={handleClick}>
         <div>
-          <InputContainer searchResults={searchResults}>
+          <InputContainer input={input}>
             <div
               style={{
                 position: "relative",
@@ -85,8 +95,8 @@ const CocktailsSearchBar = ({ setCocktail }) => {
             </div>
             <div style={{ display: "inline-block", width: "100%" }}>
               <Input
-                value={input}
                 placeholder="Enter a minimum of 3 letters"
+                isFocused={isFocused}
                 onChange={(e) => {
                   handleInputChange(e);
                   handleSearchTerms(e);
@@ -96,7 +106,7 @@ const CocktailsSearchBar = ({ setCocktail }) => {
           </InputContainer>
           <Dropdown>
             {isFocused && (
-              <CocktailsContainer>{cocktailList}</CocktailsContainer>
+              <LocationsContainer>{locationList}</LocationsContainer>
             )}
           </Dropdown>
         </div>
@@ -120,10 +130,6 @@ const InputContainer = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
-  border-bottom-left-radius: ${(props) =>
-    props.searchResults && props.searchResults.length ? "0px" : "10px"};
-  border-bottom-right-radius: ${(props) =>
-    props.searchResults && props.searchResults.length ? "0px" : "10px"};
 `;
 
 const Input = styled.input`
@@ -134,6 +140,7 @@ const Input = styled.input`
   width: 90%;
   color: #043132;
   font-size: 22px;
+  color: #043132;
   ::placeholder {
     color: #cdcdd2;
     font-size: 16px;
@@ -149,7 +156,7 @@ const Dropdown = styled.div`
   justify-content: flex-end;
 `;
 
-const Cocktail = styled.div`
+const Location = styled.div`
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   padding: 8px;
@@ -159,7 +166,7 @@ const Cocktail = styled.div`
   }
 `;
 
-const CocktailsContainer = styled.div`
+const LocationsContainer = styled.div`
   background-color: white;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
@@ -167,4 +174,4 @@ const CocktailsContainer = styled.div`
   transition: 0.2s;
 `;
 
-export default CocktailsSearchBar;
+export default LocationsSearchBar;

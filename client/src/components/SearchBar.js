@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 import Location from "./Location";
+import Cocktail from "./Cocktail";
 
 import { debounce } from "../utils";
 
@@ -12,12 +13,26 @@ const SearchBar = () => {
   const [searchResults, setSearchResults] = useState(null);
   const [searchValue, setSearchValue] = useState(null);
   const [input, setInput] = useState(false);
+  const [title, setTitle] = useState("Where do you want to go out?");
+  const [subtitle, setSubtitle] = useState("Looking for a cockail?");
 
   const handleClick = (e) => {
     if (e.target.localName === "input") {
       setInput(true);
     } else {
       setInput(false);
+    }
+  };
+
+  const handleSwitchSearch = () => {
+    if (title === "Where do you want to go out?") {
+      setSearchResults(null);
+      setTitle("What do you want to drink?");
+      setSubtitle("Looking for a place to go?");
+    } else if (title === "What do you want to drink?") {
+      setSearchResults(null);
+      setTitle("Where do you want to go out?");
+      setSubtitle("Looking for a cockail?");
     }
   };
 
@@ -35,45 +50,47 @@ const SearchBar = () => {
   useEffect(() => {
     if (searchValue === null) return;
 
-    const options = {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        Authorization: process.env.REACT_APP_FS_TOKEN,
-      },
-    };
+    const findLocationsOrCocktails = async function () {
+      if (title === "Where do you want to go out?") {
+        const response = await fetch(`/api/locations/search?q=${searchValue}`);
+        const data = await response.json();
 
-    // TODO: Get user location
-    fetch(
-      `https://api.foursquare.com/v3/autocomplete?query=${searchValue}&ll=45.50%2C-73.56&radius=10000&limit=30&types=place`,
-      options
-    )
-      .then((response) => response.json())
-      .then((response) =>
         setSearchResults(
-          response.results.filter((result) => {
+          data.results.filter((result) => {
             return result.place.categories.some((category) => {
               return category.id >= 13000 && category.id < 14000;
             });
           })
-        )
-      )
-      .catch((err) => console.error(err));
+        );
+      } else if (title === "What do you want to drink?") {
+        const response = await fetch(`/api/cocktails?q=${searchValue}`);
+        const data = await response.json();
+        setSearchResults(data.cocktails);
+      }
+    };
+    findLocationsOrCocktails();
   }, [searchValue]);
 
   let bars;
+  let cocktailList;
 
   if (searchResults) {
-    bars = searchResults.map((location) => {
-      return (
-        <Location key={location.place.fsq_id} location={location}></Location>
-      );
-    });
+    if (title === "Where do you want to go out?") {
+      bars = searchResults.map((location) => {
+        return (
+          <Location key={location.place.fsq_id} location={location}></Location>
+        );
+      });
+    } else if (title === "What do you want to drink?") {
+      cocktailList = searchResults.map((cocktail) => {
+        return <Cocktail key={cocktail._id} cocktail={cocktail}></Cocktail>;
+      });
+    }
   }
 
   return (
     <SearchContainer onClick={handleClick}>
-      <Title>Where are you?</Title>
+      <Title>{title}</Title>
       <div>
         <InputContainer input={input} searchResults={searchResults}>
           <div
@@ -92,12 +109,23 @@ const SearchBar = () => {
             />
           </div>
           <div style={{ display: "inline-block", width: "100%" }}>
-            <Input onChange={debounce(handleChange, 1000)}></Input>
+            <Input
+              placeholder="Enter a minimum of 3 letters"
+              onChange={debounce(handleChange, 1000)}
+            ></Input>
           </div>
         </InputContainer>
         <Dropdown>
-          <BarsContainer>{input && <div>{bars}</div>}</BarsContainer>
+          {title === "Where do you want to go out?" && (
+            <BarsContainer>{input && <div>{bars}</div>}</BarsContainer>
+          )}
+          {title === "What do you want to drink?" && (
+            <CocktailsContainer>
+              {input && <div>{cocktailList}</div>}
+            </CocktailsContainer>
+          )}
         </Dropdown>
+        <CocktailSearch onClick={handleSwitchSearch}>{subtitle}</CocktailSearch>
       </div>
     </SearchContainer>
   );
@@ -145,13 +173,37 @@ const Input = styled.input`
   border-radius: 10px;
   background-color: transparent;
   width: 90%;
-  margin-left:
-
-  color: #cdcdd2;
+  color: #043132;
+  ::placeholder {
+    color: #cdcdd2;
+    font-size: 18px;
+  }
   :focus {
     outline: none;
   }
 `;
+
+const CocktailSearch = styled.p`
+  color: #043132;
+  text-align: center;
+  margin-top: 12px;
+  font-style: italic;
+
+  :hover {
+    cursor: pointer;
+    font-weight: 900;
+  }
+`;
+
+// const Cocktail = styled.div`
+//   border-bottom-left-radius: 10px;
+//   border-bottom-right-radius: 10px;
+//   padding: 8px;
+//   cursor: pointer;
+//   :hover {
+//     background-color: #f3f3f3;
+//   }
+// `;
 
 const Dropdown = styled.div`
   display: flex;
@@ -160,6 +212,14 @@ const Dropdown = styled.div`
 `;
 
 const BarsContainer = styled.div`
+  background-color: white;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  box-shadow: 6px 6px 6px lightgray;
+  transition: 0.2s;
+`;
+
+const CocktailsContainer = styled.div`
   background-color: white;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;

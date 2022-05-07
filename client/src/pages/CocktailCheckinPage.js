@@ -4,28 +4,27 @@ import { AiFillStar } from "react-icons/ai";
 import { AiOutlineStar } from "react-icons/ai";
 import { AuthContext } from "../auth/AuthContext";
 import { useParams, useNavigate } from "react-router-dom";
-import CocktailsSearchBar from "../components/CocktailsSearchBar";
-import NewCocktail from "../components/NewCocktail";
+import LocationsSearchBar from "../components/LocationsSearchBar";
 
-const CheckinPage = () => {
+const CocktailCheckinPage = () => {
   const [hoverRating, setHoverRating] = useState(0);
   const [rating, setRating] = useState(0);
   const [cocktail, setCocktail] = useState(null);
+  const [location, setLocation] = useState(null);
   const [error, setError] = useState(false);
-  const [newCocktail, setNewCocktail] = useState(false);
   const [reviewSubmitted, setReviewSubmitted] = useState(false);
 
   const { user } = React.useContext(AuthContext);
 
   const navigate = useNavigate();
 
-  let { locationId } = useParams();
+  let { cocktailId } = useParams();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!cocktail) {
-      setError("Please select a cocktail before submitting your review!");
+    if (!location) {
+      setError("Please select a location before submitting your review!");
       return;
     }
 
@@ -40,8 +39,8 @@ const CheckinPage = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         userId: user.id,
-        locationId,
-        cocktailId: cocktail,
+        locationId: location,
+        cocktailId: cocktail._id,
         rating,
       }),
     };
@@ -54,6 +53,21 @@ const CheckinPage = () => {
     }
   };
 
+  useEffect(() => {
+    const findCocktailInfo = async function () {
+      const response = await fetch(`/api/cocktails/${cocktailId}`);
+      const data = await response.json();
+      setCocktail(data.cocktail);
+    };
+
+    findCocktailInfo();
+  }, []);
+
+  if (!cocktail) {
+    return <div>...loading</div>;
+  }
+
+  console.log(location);
   const stars = [1, 2, 3, 4, 5].map((r) => {
     return (
       <Star
@@ -67,30 +81,18 @@ const CheckinPage = () => {
     );
   });
 
-  const handleNewCocktail = () => {
-    if (newCocktail) {
-      setNewCocktail(false);
-    } else {
-      setNewCocktail(true);
-    }
-  };
-
   return (
     <>
       <Container>
         <CheckinWrapper>
           <form onSubmit={handleSubmit}>
-            <Name>Darling</Name>
-            <Address>1862 Blvd de Maisonneuve O, Montréal QC H3H 1J8</Address>
+            <Name>{cocktail.drinkName}</Name>
+            <Glass>{cocktail.glass}</Glass>
             <hr />
             <Cocktail>
-              <Title>What did you drink?</Title>
-              <CocktailsSearchBar setCocktail={setCocktail} />
-              <CustomCocktail>
-                Had a custom cocktail? Add it
-                <ClickHere onClick={handleNewCocktail}> here</ClickHere>!
-                {newCocktail && <NewCocktail setCocktail={setCocktail} />}
-              </CustomCocktail>
+              <Title>Where did you go?</Title>
+              <LocationsSearchBar setLocation={setLocation} />
+
               <Title>How was it?</Title>
               <RatingContainer>{stars}</RatingContainer>
             </Cocktail>
@@ -130,7 +132,7 @@ const Name = styled.h2`
   margin-top: 15px;
 `;
 
-const Address = styled.p`
+const Glass = styled.p`
   color: gray;
   margin-top: 5px;
   font-size: 15px;
@@ -143,16 +145,6 @@ const Cocktail = styled.div`
 const Title = styled.h3`
   font-size: 20px;
   margin-top: 15px;
-`;
-
-const ClickHere = styled.span`
-  cursor: pointer;
-  font-weight: 900;
-`;
-
-const CustomCocktail = styled.p`
-  padding-top: 10px;
-  font-size: 14px;
 `;
 
 const RatingContainer = styled.div`
@@ -203,4 +195,4 @@ const Error = styled.div`
   margin-bottom: 12px;
 `;
 
-export default CheckinPage;
+export default CocktailCheckinPage;

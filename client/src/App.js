@@ -13,6 +13,8 @@ import LocationCheckins from "./pages/LocationCheckins";
 import MyProfilePage from "./pages/MyProfilePage";
 import ProfilePage from "./pages/ProfilePage";
 import Homefeed from "./pages/Homefeed";
+import CocktailPage from "./pages/CocktailPage";
+import CocktailCheckinPage from "./pages/CocktailCheckinPage";
 
 function App() {
   return (
@@ -50,6 +52,15 @@ function App() {
               }
             />
             <Route
+              path="/checkin/cocktail/:cocktailId"
+              exact
+              element={
+                <AuthenticatedRoute>
+                  <CocktailCheckinPage />
+                </AuthenticatedRoute>
+              }
+            />
+            <Route
               path="/profile/:userId/checkins"
               exact
               element={
@@ -82,6 +93,15 @@ function App() {
               element={
                 <AuthenticatedRoute>
                   <LocationCheckins />
+                </AuthenticatedRoute>
+              }
+            />
+            <Route
+              path="/cocktail/:cocktailId"
+              exact
+              element={
+                <AuthenticatedRoute>
+                  <CocktailPage />
                 </AuthenticatedRoute>
               }
             />
