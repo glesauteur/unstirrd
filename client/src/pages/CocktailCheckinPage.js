@@ -124,7 +124,6 @@ const CheckinWrapper = styled.div`
   background-color: white;
   border-radius: 10px;
   padding: 0px 15px;
-
   box-shadow: 3px 3px 3px #ff855f;
 `;
 
