@@ -2,95 +2,93 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-const LocationPage = () => {
-  let { locationId } = useParams();
+const CocktailPage = () => {
+  let { cocktailId } = useParams();
 
   const [numberOfCheckins, setNumberOfCheckins] = useState(0);
-  const [location, setLocation] = useState(null);
-  const [locationAverageRating, setLocationAverageRating] = useState(0);
+  const [cocktail, setCocktail] = useState(null);
+  const [cocktailAverageRating, setCocktailAverageRating] = useState(0);
 
   const navigate = useNavigate();
 
   const handleCheckin = () => {
-    navigate(`/checkin/${locationId}`);
+    navigate(`/checkin/cocktail/${cocktailId}`);
   };
 
   const handleClick = () => {
-    navigate(`/location/${locationId}/checkins`);
+    navigate(`/cocktail/${cocktailId}/checkins`);
   };
 
   useEffect(() => {
-    const findLocationNumOfCheckins = async function () {
-      const response = await fetch(`/api/locations/${locationId}`);
+    const findCocktailNumOfCheckins = async function () {
+      const response = await fetch(`/api/cocktails/${cocktailId}`);
       const data = await response.json();
       setNumberOfCheckins(data.totalCheckins);
     };
 
-    const findLocationRatings = async function () {
-      const response = await fetch(`/api/locations/${locationId}`);
+    const findCocktailRatings = async function () {
+      const response = await fetch(`/api/cocktails/${cocktailId}`);
       const data = await response.json();
-      setLocationAverageRating(data.averageRating);
+      setCocktailAverageRating(data.averageRating);
     };
-    const findLocationInfo = async function () {
-      const response = await fetch(`/api/locations/${locationId}`);
+    const findCocktailInfo = async function () {
+      const response = await fetch(`/api/cocktails/${cocktailId}`);
       const data = await response.json();
-      setLocation(data);
+      setCocktail(data.cocktail);
     };
 
-    findLocationInfo();
-    findLocationNumOfCheckins();
-    findLocationRatings();
+    findCocktailInfo();
+    findCocktailNumOfCheckins();
+    findCocktailRatings();
   }, []);
 
-  if (!location) {
-    return <div>...</div>;
+  if (!cocktail) {
+    return <div>...loading</div>;
   }
 
-  const locationCategories = location.categories.map((locationCategorie) => {
-    return (
-      <>
-        <div key={location.fsq_id}>{locationCategorie.name} </div>
-        <span> / </span>
-      </>
-    );
+  let ingredientAndMesure = [];
+
+  let mesure = cocktail.mesure;
+
+  const allIngredients = cocktail.ingredients.forEach((ingredient, index) => {
+    ingredientAndMesure.push(ingredient + ":" + " " + mesure[index]);
+  });
+
+  const allIngredientsAndMesures = ingredientAndMesure.map((ing) => {
+    return <p>{ing}</p>;
   });
 
   return (
     <>
       <Container>
-        <LocationWrapper>
+        <CocktailWrapper>
           <div>
-            <Name>{location.name}</Name>
-            <Categories>{locationCategories}</Categories>
-            <Address>{location.address}</Address>
+            <Name>{cocktail.drinkName}</Name>
+            <Glass>{cocktail.glass}</Glass>
+            <Category>{cocktail.drinkCategory}</Category>
+            <hr />
+            <IngredientsTitle>Ingredients: </IngredientsTitle>
+            <Ingredients>{allIngredientsAndMesures}</Ingredients>
+            <RecipeTitle>Recipe: </RecipeTitle>
+            <Recipe>{cocktail.instructions}</Recipe>
             <hr />
             <ReviewsContainer>
               <ReviewsTitle>Reviews</ReviewsTitle>
               {numberOfCheckins > 0 && (
-                <Average>Average review is {locationAverageRating} / 5</Average>
+                <Average>Average review is {cocktailAverageRating} / 5</Average>
               )}
               <TotalReviews>
-                This place has{" "}
+                This cocktail has{" "}
                 <ReviewsButton onClick={handleClick}>
                   {numberOfCheckins} reviews
                 </ReviewsButton>
               </TotalReviews>
             </ReviewsContainer>
-            <IframeContainer>
-              <Iframe
-                style={{
-                  frameborder: "0",
-                  border: "0",
-                  referrerpolicy: "no-referrer-when-downgrade",
-                }}
-                src={`https://www.google.com/maps/embed/v1/place?q=${location.latitude},${location.longitude}&key=${process.env.REACT_APP_API_KEY}`}
-              ></Iframe>
-            </IframeContainer>
           </div>
           <CheckinContainer>
             <CheckinButton onClick={handleCheckin}>CHECKIN</CheckinButton>
           </CheckinContainer>
-        </LocationWrapper>
+        </CocktailWrapper>
       </Container>
     </>
   );
@@ -102,7 +100,7 @@ const Container = styled.div`
   align-items: center;
 `;
 
-const LocationWrapper = styled.div`
+const CocktailWrapper = styled.div`
   height: 500px;
   width: 500px;
   display: flex;
@@ -119,7 +117,7 @@ const LocationWrapper = styled.div`
 
 const Name = styled.h2``;
 
-const Categories = styled.div`
+const Category = styled.div`
   margin-top: 5px;
   display: flex;
   font-style: italic;
@@ -130,10 +128,30 @@ const Categories = styled.div`
   }
 `;
 
-const Address = styled.p`
+const Glass = styled.p`
   color: gray;
   margin-top: 5px;
   font-size: 15px;
+`;
+
+const IngredientsTitle = styled.h3`
+  font-weight: 900;
+  font-size: 20px;
+`;
+
+const Ingredients = styled.div`
+  margin-bottom: 18px;
+  margin-top: 5px;
+`;
+
+const RecipeTitle = styled.h3`
+  font-weight: 900;
+  font-size: 20px;
+`;
+
+const Recipe = styled.p`
+  margin-bottom: 18px;
+  margin-top: 5px;
 `;
 
 const ReviewsContainer = styled.div`
@@ -157,17 +175,6 @@ const ReviewsButton = styled.span`
   cursor: pointer;
 `;
 
-const IframeContainer = styled.div`
-  display: flex;
-  margin-top: 20px;
-  justify-content: center;
-`;
-
-const Iframe = styled.iframe`
-  width: 500px;
-  height: 200px;
-`;
-
 const CheckinContainer = styled.div`
   display: flex;
 `;
@@ -187,4 +194,4 @@ const CheckinButton = styled.button`
   }
 `;
 
-export default LocationPage;
+export default CocktailPage;

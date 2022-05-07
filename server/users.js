@@ -177,4 +177,19 @@ router.get("/:userId/followings", async (req, res) => {
   res.status(200).json({ followings });
 });
 
+router.get("/:userId/:userFollowingId", async (req, res) => {
+  const db = getDB();
+
+  const userId = req.params.userId;
+  const followingId = req.params.userFollowingId;
+
+  const findFollow = await db
+    .collection("follows")
+    .findOne({ from: ObjectId(userId), to: ObjectId(followingId) });
+
+  let isFollowing = !!findFollow;
+
+  res.status(200).json({ isFollowing });
+});
+
 module.exports = router;

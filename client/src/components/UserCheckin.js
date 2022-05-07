@@ -23,8 +23,7 @@ const UserCheckin = ({ userCheckin, locationId }) => {
       <Name onClick={handleLocation}>{userCheckin.location.name}</Name>
       <Location>{userCheckin.location.location.formatted_address}</Location>
       <Cocktail>
-        <strong>Rated Cocktail:</strong> {userCheckin.cocktail[0].drinkName} (
-        {userCheckin.cocktail[0].drinkCategory})
+        <strong>Rated Cocktail:</strong> {userCheckin.cocktail[0].drinkName}
       </Cocktail>
       <Rating>{stars}</Rating>
     </CheckinsWrapper>
@@ -47,6 +46,11 @@ const Name = styled.p`
   margin-top: 10px;
   font-weight: 900;
   font-size: 20px;
+
+  :hover {
+    cursor: pointer;
+    color: var(--primary-color);
+  }
 `;
 
 const Location = styled.p`

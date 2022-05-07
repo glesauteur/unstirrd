@@ -9,73 +9,30 @@ const UserCheckins = () => {
   let { userId } = useParams();
   const [userInfo, setUserInfo] = useState(null);
   const [following, setFollowing] = useState(false);
-  const [userCheckins, setUserCheckins] = useState([
-    {
-      cocktail: [{ drinkName: "French Negroni", drinkCategory: "Cocktail" }],
-      location: {
-        fsq_id: "58c8b974951e7d7e08bc6fd8",
-        categories: [{ name: "Lounge" }, { name: "Restaurant" }],
-        location: {
-          formatted_address:
-            "4328 Saint-Laurent Blvd (Marie-Anne), Montréal QC H2W 1Z3",
-        },
-        name: "Coldroom",
-      },
-      rating: 4,
-    },
-    {
-      cocktail: [{ drinkName: "Vieux Carre", drinkCategory: "Cocktail" }],
-      location: {
-        fsq_id: "58c8b974951e7d7e08bc6fd8",
-        categories: [{ name: "Lounge" }, { name: "Bar" }],
-        location: {
-          formatted_address:
-            "4328 Saint-Laurent Blvd (Marie-Anne), Montréal QC H2W 1Z3",
-        },
-        name: "Coldroom",
-      },
-      rating: 2,
-    },
-    {
-      cocktail: [{ drinkName: "Old Fashioned", drinkCategory: "Cocktail" }],
-      location: {
-        fsq_id: "58c8b974951e7d7e08bc6fd8",
-        categories: [{ name: "Restaurant" }, { name: "Bar" }],
-        location: {
-          formatted_address:
-            "4328 Saint-Laurent Blvd (Marie-Anne), Montréal QC H2W 1Z3",
-        },
-        name: "Henrietta",
-      },
-      rating: 2,
-    },
-    {
-      cocktail: [{ drinkName: "Last Word", drinkCategory: "Cocktail" }],
-      location: {
-        fsq_id: "58c8b974951e7d7e08bc6fd8",
-        categories: [{ name: "Bar" }],
-        location: {
-          formatted_address:
-            "4328 Saint-Laurent Blvd (Marie-Anne), Montréal QC H2W 1Z3",
-        },
-        name: "Siboire",
-      },
-      rating: 5,
-    },
-  ]);
-
-  // useEffect(() => {
-  //   fetch(`/api/users/${userId}/checkins`)
-  //     .then((response) => response.json())
-  //     .then((response) => setUserCheckins(response.checkins))
-  //     .catch((err) => console.error(err));
-  // }, []);
+  const [userCheckins, setUserCheckins] = useState([]);
 
   useEffect(() => {
-    fetch(`/api/users/${userId}`)
+    fetch(`/api/users/${userId}/checkins`)
       .then((response) => response.json())
-      .then((response) => setUserInfo(response.user))
+      .then((response) => setUserCheckins(response.checkins))
       .catch((err) => console.error(err));
+  }, []);
+
+  useEffect(() => {
+    const findUserInfo = async function () {
+      const response = await fetch(`/api/users/${userId}`);
+      const data = await response.json();
+      setUserInfo(data.user);
+    };
+
+    const isFollowing = async function () {
+      const response = await fetch(`/api/users/${user.id}/${userId}`);
+      const data = await response.json();
+      setFollowing(data.isFollowing);
+    };
+
+    isFollowing();
+    findUserInfo();
   }, []);
 
   const handleFollow = async (e) => {
@@ -136,16 +93,24 @@ const UserCheckins = () => {
   return (
     <>
       <InfoContainer>
-        <Title>{userInfo.email}'s Checkins</Title>
-        <FollowButtonContainer>
-          {following ? (
-            <FollowingButton onClick={handleUnfollow}>
-              Following
-            </FollowingButton>
-          ) : (
-            <FollowButton onClick={handleFollow}>Follow</FollowButton>
-          )}
-        </FollowButtonContainer>
+        {userId === user.id ? (
+          <Title>My Checkins</Title>
+        ) : (
+          <Title>{userInfo.email}'s Checkins</Title>
+        )}
+        {userId === user.id ? (
+          <></>
+        ) : (
+          <FollowButtonContainer>
+            {following ? (
+              <FollowingButton onClick={handleUnfollow}>
+                Following
+              </FollowingButton>
+            ) : (
+              <FollowButton onClick={handleFollow}>Follow</FollowButton>
+            )}
+          </FollowButtonContainer>
+        )}
       </InfoContainer>
       <Container>{allCheckins}</Container>
     </>
