@@ -14,7 +14,7 @@ const SearchBar = () => {
   const [searchValue, setSearchValue] = useState(null);
   const [input, setInput] = useState(false);
   const [title, setTitle] = useState("Where do you want to go out?");
-  const [subtitle, setSubtitle] = useState("Looking for a cockail?");
+  const [subtitle, setSubtitle] = useState("Looking for a cocktail?");
 
   const handleClick = (e) => {
     if (e.target.localName === "input") {
@@ -32,7 +32,7 @@ const SearchBar = () => {
     } else if (title === "What do you want to drink?") {
       setSearchResults(null);
       setTitle("Where do you want to go out?");
-      setSubtitle("Looking for a cockail?");
+      setSubtitle("Looking for a cocktail?");
     }
   };
 

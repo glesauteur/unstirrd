@@ -4,8 +4,8 @@ import { AuthContext } from "../auth/AuthContext";
 
 const MyProfilePage = () => {
   const { user } = React.useContext(AuthContext);
-  const [followers, setFollowers] = useState([]);
-  const [followings, setFollowings] = useState([]);
+  const [followers, setFollowers] = useState(null);
+  const [followings, setFollowings] = useState(null);
 
   useEffect(() => {
     const findFollowers = async function () {
@@ -24,6 +24,13 @@ const MyProfilePage = () => {
     findFollowers();
   }, []);
 
+  if (!followers || !followings) {
+    return (
+      <Loading>
+        <img src="/loading.svg" alt="loading-spinner" />
+      </Loading>
+    );
+  }
   const allFollowers = followers.map((follower) => {
     return (
       <Follows>
@@ -46,7 +53,6 @@ const MyProfilePage = () => {
     );
   });
 
-  console.log(followers);
   return (
     <>
       <Title>My Profile</Title>
@@ -77,8 +83,7 @@ const MyProfilePage = () => {
                 <strong>Followers (0) </strong>
               )}
             </p>
-
-            <p>{allFollowers}</p>
+            {allFollowers ? <p>{allFollowers}</p> : <p>loading</p>}
           </Info>
           <Info>
             <p style={{ marginBottom: "3px" }}>
@@ -95,6 +100,13 @@ const MyProfilePage = () => {
     </>
   );
 };
+
+const Loading = styled.div`
+  width: 100vw;
+  height: 100vh;
+  text-align: center;
+  margin-top: 25vh;
+`;
 
 const Title = styled.h2`
   color: white;
@@ -120,6 +132,12 @@ const Info = styled.div`
 
 const PersonalInfo = styled.div`
   margin-bottom: 10px;
+  width: 500px;
+  background-color: white;
+  border-radius: 10px;
+  padding: 15px 15px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
 `;
 
 const Subtitle = styled.h2`
@@ -128,7 +146,14 @@ const Subtitle = styled.h2`
   margin-bottom: 10px;
 `;
 
-const FollowingInfo = styled.div``;
+const FollowingInfo = styled.div`
+  width: 500px;
+  background-color: white;
+  border-radius: 10px;
+  padding: 15px 15px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+`;
 
 const Follows = styled.div`
   display: flex;

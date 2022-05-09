@@ -166,7 +166,7 @@ router.get("/:userId/followings", async (req, res) => {
       {
         $lookup: {
           from: "users",
-          localField: "from",
+          localField: "to",
           foreignField: "_id",
           as: "user",
         },
@@ -174,7 +174,14 @@ router.get("/:userId/followings", async (req, res) => {
     ])
     .toArray();
 
-  res.status(200).json({ followings });
+  const followingsWithCheckins = await Promise.all(
+    followings.map(async (following) => {
+      const checkins = await getCheckinsForUser(following.to);
+      return { ...following, checkins };
+    })
+  );
+
+  res.status(200).json({ followings: followingsWithCheckins });
 });
 
 router.get("/:userId/:userFollowingId", async (req, res) => {

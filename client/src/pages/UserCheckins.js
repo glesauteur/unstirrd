@@ -9,7 +9,7 @@ const UserCheckins = () => {
   let { userId } = useParams();
   const [userInfo, setUserInfo] = useState(null);
   const [following, setFollowing] = useState(false);
-  const [userCheckins, setUserCheckins] = useState([]);
+  const [userCheckins, setUserCheckins] = useState(null);
 
   useEffect(() => {
     fetch(`/api/users/${userId}/checkins`)
@@ -77,8 +77,12 @@ const UserCheckins = () => {
     }
   };
 
-  if (!userInfo) {
-    return <div>loading</div>;
+  if (!userInfo || !userCheckins) {
+    return (
+      <Loading>
+        <img src="/loading.svg" alt="loading-spinner" />
+      </Loading>
+    );
   }
 
   const allCheckins = userCheckins.map((userCheckin) => {
@@ -116,6 +120,13 @@ const UserCheckins = () => {
     </>
   );
 };
+
+const Loading = styled.div`
+  width: 100vw;
+  height: 100vh;
+  text-align: center;
+  margin-top: 25vh;
+`;
 
 const InfoContainer = styled.div`
   display: flex;

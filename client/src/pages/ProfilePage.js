@@ -19,7 +19,11 @@ const ProfilePage = () => {
   }, []);
 
   if (!userProfile) {
-    return <div>loading</div>;
+    return (
+      <Loading>
+        <img src="/loading.svg" alt="loading-spinner" />
+      </Loading>
+    );
   }
 
   return (
@@ -29,6 +33,13 @@ const ProfilePage = () => {
     </>
   );
 };
+
+const Loading = styled.div`
+  width: 100vw;
+  height: 100vh;
+  text-align: center;
+  margin-top: 25vh;
+`;
 
 const Title = styled.h2`
   color: white;

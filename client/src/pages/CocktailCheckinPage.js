@@ -64,7 +64,11 @@ const CocktailCheckinPage = () => {
   }, []);
 
   if (!cocktail) {
-    return <div>...loading</div>;
+    return (
+      <Loading>
+        <img src="/loading.svg" alt="loading-spinner" />
+      </Loading>
+    );
   }
 
   console.log(location);
@@ -112,6 +116,13 @@ const CocktailCheckinPage = () => {
     </>
   );
 };
+
+const Loading = styled.div`
+  width: 100vw;
+  height: 100vh;
+  text-align: center;
+  margin-top: 25vh;
+`;
 
 const Container = styled.div`
   display: flex;

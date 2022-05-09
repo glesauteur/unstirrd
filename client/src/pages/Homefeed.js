@@ -5,26 +5,28 @@ import HomefeedFollowerCheckin from "../components/HomefeedFollowerCheckin";
 
 const Homefeed = () => {
   const { user } = React.useContext(AuthContext);
-  const [followerCheckins, setFollowerCheckins] = useState([]);
+  const [followingCheckins, setFollowingCheckins] = useState([]);
 
   useEffect(() => {
-    const getFollowerCheckins = async function () {
-      const response = await fetch(`api/users/${user.id}/followers`);
+    const getFollowingCheckins = async function () {
+      const response = await fetch(`api/users/${user.id}/followings`);
       const data = await response.json();
 
-      setFollowerCheckins(data.followers);
+      setFollowingCheckins(data.followings);
     };
-    getFollowerCheckins();
+    getFollowingCheckins();
   }, []);
 
-  if (followerCheckins.length < 1) {
-    return <div>loading..</div>;
+  if (followingCheckins.length < 1) {
+    return (
+      <Loading>
+        <img src="/loading.svg" alt="loading-spinner" />
+      </Loading>
+    );
   }
 
-  console.log(followerCheckins);
-
-  const allFollowers = followerCheckins.map((follower) => {
-    return <HomefeedFollowerCheckin follower={follower} />;
+  const allFollowers = followingCheckins.map((following) => {
+    return <HomefeedFollowerCheckin following={following} />;
   });
 
   return (
@@ -37,16 +39,23 @@ const Homefeed = () => {
   );
 };
 
+const Loading = styled.div`
+  width: 100vw;
+  height: 100vh;
+  text-align: center;
+  margin-top: 25vh;
+`;
+
 const Container = styled.div`
   display: flex;
   justify-content: center;
   margin-top: 60px;
+  padding-bottom: 60px;
 `;
 const SubContainer = styled.div`
   width: 50%;
   margin: auto;
   height: 100vh;
-  position: fixed;
   border-radius: 10px;
 `;
 

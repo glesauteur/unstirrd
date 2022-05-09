@@ -32,15 +32,6 @@ router.post("/", async (req, res) => {
 
   const location = await locationData.json();
 
-  const result = await db.collection("locations").findOneAndUpdate(
-    { locationFsId: req.body.locationId },
-    {
-      $set: { locationFsId: req.body.locationId, assignment: 5 },
-      $inc: { numberOfCheckins: 1 },
-    },
-    { upsert: true, returnOriginal: false }
-  );
-
   res.status(200).json({ checkin: checkin });
 });
 
