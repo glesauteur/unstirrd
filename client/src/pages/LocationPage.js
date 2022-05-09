@@ -43,7 +43,11 @@ const LocationPage = () => {
   }, []);
 
   if (!location) {
-    return <div>...</div>;
+    return (
+      <Loading>
+        <img src="/loading.svg" alt="loading-spinner" />
+      </Loading>
+    );
   }
 
   const locationCategories = location.categories.map((locationCategorie) => {
@@ -95,6 +99,13 @@ const LocationPage = () => {
     </>
   );
 };
+
+const Loading = styled.div`
+  width: 100vw;
+  height: 100vh;
+  text-align: center;
+  margin-top: 25vh;
+`;
 
 const Container = styled.div`
   display: flex;

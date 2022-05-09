@@ -43,7 +43,11 @@ const CocktailPage = () => {
   }, []);
 
   if (!cocktail) {
-    return <div>...loading</div>;
+    return (
+      <Loading>
+        <img src="/loading.svg" alt="loading-spinner" />
+      </Loading>
+    );
   }
 
   let ingredientAndMesure = [];
@@ -93,6 +97,13 @@ const CocktailPage = () => {
     </>
   );
 };
+
+const Loading = styled.div`
+  width: 100vw;
+  height: 100vh;
+  text-align: center;
+  margin-top: 25vh;
+`;
 
 const Container = styled.div`
   display: flex;

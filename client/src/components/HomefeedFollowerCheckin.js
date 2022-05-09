@@ -1,29 +1,56 @@
 import React from "react";
 import styled from "styled-components";
 
+import { useNavigate, useParams } from "react-router-dom";
+
 import { AiFillStar } from "react-icons/ai";
 import { AiOutlineStar } from "react-icons/ai";
 
-const HomefeedFollowerCheckin = ({ follower }) => {
-  let followerCheckins = follower.checkins.map((followerCheckin) => {
+const HomefeedFollowerCheckin = ({ following }) => {
+  const navigate = useNavigate();
+
+  const handleUserClick = () => {
+    let userId = following.user[0]._id;
+    navigate(`/profile/${userId}/checkins`);
+  };
+
+  let followingCheckins = following.checkins.map((followingCheckin) => {
     const stars = [1, 2, 3, 4, 5].map((r) => {
       return (
         <Star key={r}>
-          {followerCheckin.rating >= r ? <AiFillStar /> : <AiOutlineStar />}
+          {followingCheckin.rating >= r ? <AiFillStar /> : <AiOutlineStar />}
         </Star>
       );
     });
+
+    console.log(following);
     return (
       <>
         <CheckinBlock>
           <DrinkAndLocation>
-            <Name>
-              {follower.user[0].name}
-              <Strong> had a </Strong>
-              {followerCheckin.cocktail[0].drinkName}
-            </Name>
+            <Name onClick={handleUserClick}>{following.user[0].name}</Name> had
+            a
+            <Strong>
+              {" "}
+              <Cocktail
+                onClick={() => {
+                  navigate(`/cocktail/${followingCheckin.cocktail[0]._id}`);
+                }}
+              >
+                {followingCheckin.cocktail[0].drinkName}
+              </Cocktail>{" "}
+            </Strong>
             <div>
-              <Strong>at </Strong> {followerCheckin.location.name}
+              at{" "}
+              <Strong>
+                <Location
+                  onClick={() => {
+                    navigate(`/location/${followingCheckin.location.fsq_id}`);
+                  }}
+                >
+                  {followingCheckin.location.name}
+                </Location>
+              </Strong>
             </div>
           </DrinkAndLocation>
           <StarsBlock>{stars}</StarsBlock>
@@ -34,7 +61,7 @@ const HomefeedFollowerCheckin = ({ follower }) => {
 
   return (
     <>
-      <div>{followerCheckins}</div>
+      <div>{followingCheckins}</div>
     </>
   );
 };
@@ -58,7 +85,29 @@ const DrinkAndLocation = styled.div`
   gap: 5px;
 `;
 
-const Name = styled.div``;
+const Name = styled.div`
+  cursor: pointer;
+  :hover {
+    color: var(--primary-color);
+    font-weight: 900;
+  }
+`;
+
+const Cocktail = styled.span`
+  cursor: pointer;
+  :hover {
+    color: var(--primary-color);
+    font-weight: 900;
+  }
+`;
+
+const Location = styled.span`
+  cursor: pointer;
+  :hover {
+    color: var(--primary-color);
+    font-weight: 900;
+  }
+`;
 
 const Strong = styled.span`
   font-weight: 900;
