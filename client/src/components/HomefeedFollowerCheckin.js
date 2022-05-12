@@ -27,32 +27,35 @@ const HomefeedFollowerCheckin = ({ following }) => {
     return (
       <>
         <CheckinBlock>
-          <DrinkAndLocation>
-            <Name onClick={handleUserClick}>{following.user[0].name}</Name> had
-            a
-            <Strong>
-              {" "}
-              <Cocktail
-                onClick={() => {
-                  navigate(`/cocktail/${followingCheckin.cocktail[0]._id}`);
-                }}
-              >
-                {followingCheckin.cocktail[0].drinkName}
-              </Cocktail>{" "}
-            </Strong>
+          <div>
             <div>
-              at{" "}
+              <Name onClick={handleUserClick}>{following.user[0].name}</Name>{" "}
+              had a
               <Strong>
-                <Location
+                {" "}
+                <Cocktail
                   onClick={() => {
-                    navigate(`/location/${followingCheckin.location.fsq_id}`);
+                    navigate(`/cocktail/${followingCheckin.cocktail[0]._id}`);
                   }}
                 >
-                  {followingCheckin.location.name}
-                </Location>
+                  {followingCheckin.cocktail[0].drinkName}
+                </Cocktail>{" "}
               </Strong>
             </div>
-          </DrinkAndLocation>
+          </div>
+          <div>
+            at{" "}
+            <Strong>
+              <Location
+                onClick={() => {
+                  navigate(`/location/${followingCheckin.location.fsq_id}`);
+                }}
+              >
+                {followingCheckin.location.name}
+              </Location>
+            </Strong>
+          </div>
+
           <StarsBlock>{stars}</StarsBlock>
         </CheckinBlock>
       </>
@@ -80,12 +83,7 @@ const CheckinBlock = styled.div`
   margin-top: 10px;
 `;
 
-const DrinkAndLocation = styled.div`
-  display: flex;
-  gap: 5px;
-`;
-
-const Name = styled.div`
+const Name = styled.span`
   cursor: pointer;
   :hover {
     color: var(--primary-color);

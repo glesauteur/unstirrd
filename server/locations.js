@@ -7,6 +7,8 @@ const { FS_TOKEN } = process.env;
 
 router.get("/search", async (req, res) => {
   let searchValue = req.query.q;
+  let lat = req.query.lat;
+  let long = req.query.long;
 
   const options = {
     method: "GET",
@@ -17,7 +19,7 @@ router.get("/search", async (req, res) => {
   };
 
   const response = await fetch(
-    `https://api.foursquare.com/v3/autocomplete?query=${searchValue}&ll=45.50%2C-73.56&radius=10000&limit=30&types=place`,
+    `https://api.foursquare.com/v3/autocomplete?query=${searchValue}&ll=${lat}%2C${long}&radius=10000&limit=30&types=place`,
     options
   );
 

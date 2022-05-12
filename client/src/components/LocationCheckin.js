@@ -21,10 +21,16 @@ const LocationCheckin = ({ locationCheckin }) => {
 
   return (
     <CheckinsWrapper>
-      <Cocktail>
-        <strong>Rated Cocktail:</strong> {locationCheckin.cocktail[0].drinkName}{" "}
-        ({locationCheckin.cocktail[0].drinkCategory})
-      </Cocktail>
+      <CocktailWrapper>
+        <strong>Rated Cocktail:</strong>{" "}
+        <Cocktail
+          onClick={() => {
+            navigate(`/cocktail/${locationCheckin.cocktail[0]._id}`);
+          }}
+        >
+          {locationCheckin.cocktail[0].drinkName}
+        </Cocktail>{" "}
+      </CocktailWrapper>
       <User>
         <strong>By:</strong>{" "}
         <UserName onClick={handleUserClick}>
@@ -49,9 +55,17 @@ const CheckinsWrapper = styled.div`
   box-shadow: 3px 3px 3px #ff855f;
 `;
 
-const Cocktail = styled.p`
+const CocktailWrapper = styled.p`
   font-size: 15px;
   margin-top: 15px;
+`;
+
+const Cocktail = styled.span`
+  :hover {
+    color: var(--primary-color);
+    font-weight: 900;
+    cursor: pointer;
+  }
 `;
 
 const User = styled.p`

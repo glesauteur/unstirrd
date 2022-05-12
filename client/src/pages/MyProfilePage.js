@@ -119,10 +119,16 @@ const Title = styled.h2`
 const UserInfoContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 30%;
   margin: auto;
   align-content: center;
   gap: 10px;
+  @media (min-width: 1025px) {
+    width: 30%;
+  }
+  @media (max-width: 1024px) {
+    margin-right: 25px;
+    margin-left: 25px;
+  }
 `;
 
 const Info = styled.div`
@@ -132,12 +138,14 @@ const Info = styled.div`
 
 const PersonalInfo = styled.div`
   margin-bottom: 10px;
-  width: 500px;
   background-color: white;
   border-radius: 10px;
   padding: 15px 15px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
+  @media (min-width: 1025px) {
+    width: 500px;
+  }
 `;
 
 const Subtitle = styled.h2`
@@ -147,12 +155,14 @@ const Subtitle = styled.h2`
 `;
 
 const FollowingInfo = styled.div`
-  width: 500px;
   background-color: white;
   border-radius: 10px;
   padding: 15px 15px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
+  @media (min-width: 1025px) {
+    width: 500px;
+  }
 `;
 
 const Follows = styled.div`

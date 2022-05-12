@@ -7,6 +7,7 @@ export const AuthContext = createContext({ user: null });
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [latLong, setLatLong] = useState(null);
 
   useEffect(() => {
     setLoading(true);
@@ -26,7 +27,7 @@ export function AuthProvider({ children }) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user }}>
+    <AuthContext.Provider value={{ user, latLong, setLatLong }}>
       {!loading && children}
     </AuthContext.Provider>
   );

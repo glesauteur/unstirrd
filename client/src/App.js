@@ -15,6 +15,7 @@ import ProfilePage from "./pages/ProfilePage";
 import Homefeed from "./pages/Homefeed";
 import CocktailPage from "./pages/CocktailPage";
 import CocktailCheckinPage from "./pages/CocktailCheckinPage";
+import CocktailCheckins from "./pages/CocktailCheckins";
 
 function App() {
   return (
@@ -93,6 +94,15 @@ function App() {
               element={
                 <AuthenticatedRoute>
                   <LocationCheckins />
+                </AuthenticatedRoute>
+              }
+            />
+            <Route
+              path="/cocktail/:cocktailId/checkins"
+              exact
+              element={
+                <AuthenticatedRoute>
+                  <CocktailCheckins />
                 </AuthenticatedRoute>
               }
             />

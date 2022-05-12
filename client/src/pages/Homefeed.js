@@ -53,10 +53,15 @@ const Container = styled.div`
   padding-bottom: 60px;
 `;
 const SubContainer = styled.div`
-  width: 50%;
-  margin: auto;
-  height: 100vh;
-  border-radius: 10px;
+  @media (max-width: 1025px) {
+    margin: 0px 25px;
+  }
+  @media (min-width: 1025px) {
+    width: 50%;
+    margin: auto;
+    height: 100vh;
+    border-radius: 10px;
+  }
 `;
 
 const Title = styled.h2`

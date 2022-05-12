@@ -19,18 +19,22 @@ const Header = ({ UnstirrdLogo }) => {
   }
 
   const handleCheckins = () => {
+    setHamburgerClicked(false);
     navigate(`profile/${user.id}/checkins`);
   };
 
   const handleHomepage = () => {
+    setHamburgerClicked(false);
     navigate(`/`);
   };
 
   const handleProfile = () => {
+    setHamburgerClicked(false);
     navigate(`/my-profile`);
   };
 
   const handleHomefeed = () => {
+    setHamburgerClicked(false);
     navigate(`/homefeed`);
   };
 

@@ -22,9 +22,16 @@ const UserCheckin = ({ userCheckin, locationId }) => {
     <CheckinsWrapper>
       <Name onClick={handleLocation}>{userCheckin.location.name}</Name>
       <Location>{userCheckin.location.location.formatted_address}</Location>
-      <Cocktail>
-        <strong>Rated Cocktail:</strong> {userCheckin.cocktail[0].drinkName}
-      </Cocktail>
+      <CocktailWrapper>
+        <strong>Rated Cocktail:</strong>{" "}
+        <Cocktail
+          onClick={() => {
+            navigate(`/cocktail/${userCheckin.cocktail[0]._id}`);
+          }}
+        >
+          {userCheckin.cocktail[0].drinkName}
+        </Cocktail>
+      </CocktailWrapper>
       <Rating>{stars}</Rating>
     </CheckinsWrapper>
   );
@@ -59,9 +66,16 @@ const Location = styled.p`
   margin-top: 5px;
 `;
 
-const Cocktail = styled.p`
+const CocktailWrapper = styled.p`
   font-size: 15px;
   margin-top: 15px;
+`;
+
+const Cocktail = styled.span`
+  :hover {
+    cursor: pointer;
+    color: var(--primary-color);
+  }
 `;
 
 const Rating = styled.p`

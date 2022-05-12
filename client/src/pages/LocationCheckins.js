@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import LocationCheckin from "../components/LocationCheckin";
-import { AiTwotoneExclamationCircle } from "react-icons/ai";
 
 const LocationCheckins = () => {
-  const [locationCheckins, setlocationCheckins] = useState([]);
-  const [locationName, setLocationName] = useState("");
+  const [locationCheckins, setlocationCheckins] = useState(null);
+  const [locationName, setLocationName] = useState(null);
 
   let { locationId } = useParams();
 
@@ -28,6 +27,14 @@ const LocationCheckins = () => {
     findLocationCheckins();
   }, []);
 
+  if (!locationCheckins || !locationName) {
+    return (
+      <Loading>
+        <img src="/loading.svg" alt="loading-spinner" />
+      </Loading>
+    );
+  }
+
   const allLocationCheckins = locationCheckins.map((locationCheckin) => {
     return (
       <LocationCheckin
@@ -37,8 +44,6 @@ const LocationCheckins = () => {
     );
   });
 
-  console.log(allLocationCheckins);
-
   return (
     <>
       <Title>{locationName}'s reviews</Title>
@@ -46,6 +51,13 @@ const LocationCheckins = () => {
     </>
   );
 };
+
+const Loading = styled.div`
+  width: 100vw;
+  height: 100vh;
+  text-align: center;
+  margin-top: 25vh;
+`;
 
 const Container = styled.div`
   display: flex;

@@ -9,7 +9,10 @@ import Cocktail from "./Cocktail";
 
 import { debounce } from "../utils";
 
+import { AuthContext } from "../auth/AuthContext";
+
 const SearchBar = () => {
+  const { latLong, setLatLong } = React.useContext(AuthContext);
   const [searchResults, setSearchResults] = useState(null);
   const [searchValue, setSearchValue] = useState(null);
   const [input, setInput] = useState(false);
@@ -51,8 +54,11 @@ const SearchBar = () => {
     if (searchValue === null) return;
 
     const findLocationsOrCocktails = async function () {
+      console.log(latLong);
       if (title === "Where do you want to go out?") {
-        const response = await fetch(`/api/locations/search?q=${searchValue}`);
+        const response = await fetch(
+          `/api/locations/search?q=${searchValue}&lat=${latLong.lat}&long=${latLong.long}`
+        );
         const data = await response.json();
 
         setSearchResults(
@@ -71,6 +77,21 @@ const SearchBar = () => {
     findLocationsOrCocktails();
   }, [searchValue]);
 
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+      console.error("error");
+    }
+
+    function showPosition(position) {
+      setLatLong({
+        lat: position.coords.latitude,
+        long: position.coords.longitude,
+      });
+    }
+  }, []);
+
   let bars;
   let cocktailList;
 
@@ -87,6 +108,8 @@ const SearchBar = () => {
       });
     }
   }
+
+  console.log(latLong);
 
   return (
     <SearchContainer onClick={handleClick}>
@@ -142,6 +165,7 @@ const SearchContainer = styled.div`
 const Title = styled.h2`
   color: white;
   margin-bottom: 10px;
+  text-align: center;
 `;
 
 const InputContainer = styled.div`

@@ -5,7 +5,10 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 import { debounce } from "../utils";
 
+import { AuthContext } from "../auth/AuthContext";
+
 const LocationsSearchBar = ({ setLocation }) => {
+  const { latLong, setLatLong } = React.useContext(AuthContext);
   const [searchValue, setSearchValue] = useState(null);
   const [searchResults, setSearchResults] = useState(null);
   const [isFocused, setIsFocused] = useState(false);
@@ -13,7 +16,9 @@ const LocationsSearchBar = ({ setLocation }) => {
 
   useEffect(() => {
     const findLocations = async function () {
-      const response = await fetch(`/api/locations/search?q=${searchValue}`);
+      const response = await fetch(
+        `/api/locations/search?q=${searchValue}&lat=${latLong.lat}&long=${latLong.long}`
+      );
       const data = await response.json();
 
       setSearchResults(
