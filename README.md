@@ -3,6 +3,13 @@ Unstirrd is a cocktail review app. Want to know where the best Negroni is in Mon
 
 Unstirrd is inspired by the app [Untappd](https://untappd.com/) but adapted to cocktails instead of beers.
 
+## Tech Stack
+
+  - React Frontend (create-react-app)
+  - Node/Express API
+  - MongoDB
+  - Third Party APIs (foursquare, google, cocktailsdb)
+
 ## Architecture
 
 For detailed info on how this project was built, view the [docs](./docs) folder.
@@ -19,10 +26,6 @@ For detailed info on how this project was built, view the [docs](./docs) folder.
   - The Cocktail DB: [https://rapidapi.com/thecocktaildb/api/the-cocktail-db/](https://rapidapi.com/thecocktaildb/api/the-cocktail-db/)
   - Foursquare Places: [https://foursquare.com/products/places/](https://foursquare.com/products/places/)
   - Maps Embed: https://developers.google.com/maps/documentation/embed/get-started
-
-## Database
-
-MongoDB: https://www.mongodb.com/
 
 ## Local Development
 
