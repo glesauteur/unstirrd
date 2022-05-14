@@ -3,34 +3,28 @@ Unstirrd is a cocktail review app. Want to know where the best Negroni is in Mon
 
 Unstirrd is inspired by the app [Untappd](https://untappd.com/) but adapted to cocktails instead of beers.
 
-## **How it works**
+## Architecture
 
-**Looking for cocktail reviews**
+For detailed info on how this project was built, view the [docs](./docs) folder.
 
-You can either find a bar and look for its reviews, or you can look for a specific cocktail and know where in your selected region people reviewed it.
+## Features
 
-**Adding reviews**
+  - Looking for Places: Search for your favorite bar and check-in a cocktail.
+  - Looking for a specific cocktail: Search for the cocktail and check-in with a location. If the cocktail is not in our database, you can create your own.
+  - Review your cocktail.
+  - Follow your friends to discover new cocktails and places.
 
-Adding your own cocktail reviews is also important to ensure others can benefit from the app. You’re at a bar, you have just tried their Margarita and you really liked it. You can open your app, check in at the bar and rate your Margarita. If you don’t find the cocktail from the app list, you can also manually add it. The name of the cocktail is required, as well as the main ingredients, the type of glass and the recipe.
+## Third Party APIs
 
-**Following people**
+  - The Cocktail DB: [https://rapidapi.com/thecocktaildb/api/the-cocktail-db/](https://rapidapi.com/thecocktaildb/api/the-cocktail-db/)
+  - Foursquare Places: [https://foursquare.com/products/places/](https://foursquare.com/products/places/)
+  - Maps Embed: https://developers.google.com/maps/documentation/embed/get-started
 
-You can also follow other people. Your homefeed will allow you to know where they checked-in and which cocktails they've had.
-
-## **APIs used to build the app**
-
-The Cocktail DB: [https://rapidapi.com/thecocktaildb/api/the-cocktail-db/](https://rapidapi.com/thecocktaildb/api/the-cocktail-db/)
-
-Foursquare Places: [https://foursquare.com/products/places/](https://foursquare.com/products/places/)
-
-Maps Embed: https://developers.google.com/maps/documentation/embed/get-started
-
-## **Database**
+## Database
 
 MongoDB: https://www.mongodb.com/
 
-## How to run the app
-Open 2 terminals: 
+## Local Development
 
 To run the frontend: 
 - `cd client`
@@ -41,3 +35,5 @@ To run the backend (server):
 - `cd server`
 - `yarn install`
 - `yarn start`
+
+Note: For authentication features / Google oauth callback, you'll need a tunnelling solution like [ngrok](https://ngrok.com/).
