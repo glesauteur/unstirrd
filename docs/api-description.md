@@ -59,7 +59,7 @@ Resource: `GET /api/cocktails`
   "instructions": "In a shaker half-filled with ice cubes, combine all of the ingredients...",
   "image": "https://www.thecocktaildb.com/images/media/drink/rwsyyu1483388181.jpg",
   "ingredients": ["Dark rum", "Kahlua", "Egg white"],
-  "mesure": ["2 oz ", "1 oz ", "1 "],
+  "mesure": ["2 oz", "1 oz", "1"],
 }
 ```
 ### Search for a specific cocktail
@@ -71,6 +71,82 @@ Resource: `GET /api/cocktails:cocktailId`
 `/api/cocktails/62672ad2772775494fa0d2da`
 
 **Example Response**
+
+```
+200 OK
+```
+
+```json
+{
+"cocktail": 
+  { 
+    "_id": "62672ad2772775494fa0d2da",
+    "idDrink": "11023",
+    "drinkName": "Almeria",
+    "drinkCategory": "Ordinary Drink",
+    "alcoholic": "true",
+    "glass": "Cocktail glass",
+    "instructions": "In a shaker half-filled with ice cubes, combine all of the ingredients...",
+    "image": "https://www.thecocktaildb.com/images/media/drink/rwsyyu1483388181.jpg",
+    "ingredients": ["Dark rum", "Kahlua", "Egg white"],
+    "mesure": ["2 oz", "1 oz", "1"]
+    },
+ "averageRating": 2,
+ "checkins": {
+     "_id": "627926f1f268bda18d109a43",
+    "userId": "6278152af725449881506703",
+    "locationFsId": "58c8b974951e7d7e08bc6fd8",
+    "cocktailId": "62672ad2772775494fa0d2da",
+    "rating": 2
+    },
+    {
+     "_id": "62792b8b111b894e977ff437",
+    "userId": "6278152af72544988150670c",
+    "locationFsId": "4bdf009389ca76b0cfab5d5e",
+    "cocktailId": "62672ad2772775494fa0d2da",
+    "rating": 2
+    },
+ "totalCheckins": 2,
+   
+}
+```
+### Add a new cocktail
+
+Resource: `POST /api/cocktails:cocktailId`
+
+**Example Request Body**
+
+```json
+{
+  "drinkName": "abc",
+  "glass": "def",
+  "ingredients": ["a", "b", "c"],
+  "instructions": "loremipsum",
+  "mesure": ["1 oz", "1 oz", "2 oz"],
+}
+```
+
+**Example Response**
+
+```
+200 OK
+```
+
+```json
+{
+  "idDrink": null,
+  "drinkName": "abc",
+  "drinkCategory": null,
+  "alcoholic": "true",
+  "glass": "def",
+  "instructions": "loremipsum",
+  "image": null,
+  "ingredients": ["a", "b", "c"],
+  "mesure": ["1 oz", "1 oz", "2 oz"]
+ }
+  
+```
+
 
 ```
 200 OK
