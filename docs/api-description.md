@@ -170,17 +170,17 @@ Resource: `POST /api/cocktails`
  "checkins": [
     {
      "_id": "98213791",
-    "userId": "12345",
-    "locationFsId": "829337",
-    "cocktailId": "131415",
-    "rating": 2
+     "userId": "12345",
+     "locationFsId": "829337",
+     "cocktailId": "131415",
+     "rating": 2
     },
     {
      "_id": "179341819",
-    "userId": "6789",
-    "locationFsId": "12345",
-    "cocktailId": "131415",
-    "rating": 2
+     "userId": "6789",
+     "locationFsId": "12345",
+     "cocktailId": "131415",
+     "rating": 2
     },
    ]
  "totalCheckins": 2,   
@@ -203,16 +203,16 @@ Resource: `GET /api/users`
 {
   "user": [
     {  
-      "_id": "12345",
-      "googleId": "fourSquarePlaceId",
-      "email": "abc@email.com",
-      "name": "abc def",
+     "_id": "12345",
+     "googleId": "fourSquarePlaceId",
+     "email": "abc@email.com",
+     "name": "abc def",
     },
     {  
-      "_id": "6789",
-      "googleId": "fourSquarePlaceId",
-      "email": "def@email.com",
-      "name": "ghi jkl",
+     "_id": "6789",
+     "googleId": "fourSquarePlaceId",
+     "email": "def@email.com",
+     "name": "ghi jkl",
     },
    ]
 }
@@ -235,11 +235,11 @@ Resource: `GET /api/users/12345`
 ```json
 {
  "user": 
-     {
-      "_id": "12345",
-      "googleId": "fourSquarePlaceId",
-      "email": "abc@email.com",
-      "name": "abc def",
+    {
+     "_id": "12345",
+     "googleId": "fourSquarePlaceId",
+     "email": "abc@email.com",
+     "name": "abc def",
      },
 }
 ```
@@ -261,45 +261,45 @@ Resource: `GET /api/users/12345`
 ```json
 {
  "checkins": [
-	{
-	"rating": 4,
-	"user": [
-	       {
-		"_id": "6270740df13f3e18450e48a4",
-		"googleId": "116230827991041529638",
-		"email": "gabrielle.le.sauteur@gmail.com",
-		"name": "Gabrielle Le Sauteur"
-		}
+ 	{
+	 "rating": 4,
+	 "user": [
+	   {
+	    "_id": "6270740df13f3e18450e48a4",
+	    "googleId": "116230827991041529638",
+	    "email": "gabrielle.le.sauteur@gmail.com",
+	    "name": "Gabrielle Le Sauteur"
+	   }
 	],
 	"cocktail": [
-		{
-		"_id": "62672ad5772775494fa0d3cf",
-		"idDrink": "11003",
-		"drinkName": "Negroni",
-		"drinkCategory": 
-		"Ordinary Drink",
-		"alcoholic": true,
-		"glass": "Old-fashioned glass",
-		"instructions": "Stir into glass over ice, garnish and serve.",
-		"image": "https://www.thecocktaildb.com/images/media/drink/qgdu971561574065.jpg",
-		"ingredients": [
-				"Gin",
-				"Campari",
-				"Sweet Vermouth"
-				],
-				"mesure": [
-					"1 oz ",
-					"1 oz ",
-					"1 oz "
-				]
-		}
+	   {
+	    "_id": "62672ad5772775494fa0d3cf",
+	    "idDrink": "11003",
+	    "drinkName": "Negroni",
+	    "drinkCategory": 
+	    "Ordinary Drink",
+	    "alcoholic": true,
+	    "glass": "Old-fashioned glass",
+	    "instructions": "Stir into glass over ice, garnish and serve.",
+	    "image": "https://www.thecocktaildb.com/images/media/drink/qgdu971561574065.jpg",
+	    "ingredients": [
+		"Gin",
+		"Campari",
+		"Sweet Vermouth"
 		],
-		"location": {
-			"fsq_id": "524a00ba11d2921532e7d511",
-		        "...": "..."
-			}
+	     "mesure": [
+		"1 oz ",
+		"1 oz ",
+		"1 oz "
+		]
+	    }
+	],
+	"location": {
+		"fsq_id": "524a00ba11d2921532e7d511",
+		"...": "..."
+		}
 	},
-	]
+    ]
 }
 ```
 
@@ -314,7 +314,7 @@ From user:
 To user:
 ```json
 {
-  "toUserId": 6789
+ "toUserId": 6789
 }
 ```
 
