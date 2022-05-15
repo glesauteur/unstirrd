@@ -50,7 +50,7 @@ Resource: `GET /api/cocktails`
 
 ```json
 {
-  "_id": "62672ad2772775494fa0d2da",
+  "_id": "12345",
   "idDrink": "11023",
   "drinkName": "Almeria",
   "drinkCategory": "Ordinary Drink",
@@ -80,7 +80,7 @@ Resource: `GET /api/cocktails:cocktailId`
 {
 "cocktail": 
   { 
-    "_id": "62672ad2772775494fa0d2da",
+    "_id": "12345",
     "idDrink": "11023",
     "drinkName": "Almeria",
     "drinkCategory": "Ordinary Drink",
@@ -93,17 +93,17 @@ Resource: `GET /api/cocktails:cocktailId`
     },
  "averageRating": 2,
  "checkins": {
-     "_id": "627926f1f268bda18d109a43",
-    "userId": "6278152af725449881506703",
-    "locationFsId": "58c8b974951e7d7e08bc6fd8",
-    "cocktailId": "62672ad2772775494fa0d2da",
+     "_id": "12345",
+    "userId": "67890",
+    "locationFsId": "101112",
+    "cocktailId": "131415",
     "rating": 2
     },
     {
-     "_id": "62792b8b111b894e977ff437",
-    "userId": "6278152af72544988150670c",
-    "locationFsId": "4bdf009389ca76b0cfab5d5e",
-    "cocktailId": "62672ad2772775494fa0d2da",
+     "_id": "67890",
+    "userId": "12345",
+    "locationFsId": "171819",
+    "cocktailId": "131415",
     "rating": 2
     },
  "totalCheckins": 2,
@@ -147,7 +147,6 @@ Resource: `POST /api/cocktails:cocktailId`
   
 ```
 
-
 ```
 200 OK
 ```
@@ -156,7 +155,7 @@ Resource: `POST /api/cocktails:cocktailId`
 {
 "cocktail": 
   { 
-    "_id": "62672ad2772775494fa0d2da",
+    "_id": "131415",
     "idDrink": "11023",
     "drinkName": "Almeria",
     "drinkCategory": "Ordinary Drink",
@@ -168,26 +167,45 @@ Resource: `POST /api/cocktails:cocktailId`
     "mesure": ["2 oz ", "1 oz ", "1 "]
     },
  "averageRating": 2,
- "checkins": {
-     "_id": "627926f1f268bda18d109a43",
-    "userId": "6278152af725449881506703",
-    "locationFsId": "58c8b974951e7d7e08bc6fd8",
-    "cocktailId": "62672ad2772775494fa0d2da",
+ "checkins": [
+     "_id": "98213791",
+    "userId": "12345",
+    "locationFsId": "829337",
+    "cocktailId": "131415",
     "rating": 2
     },
     {
-     "_id": "62792b8b111b894e977ff437",
-    "userId": "6278152af72544988150670c",
-    "locationFsId": "4bdf009389ca76b0cfab5d5e",
-    "cocktailId": "62672ad2772775494fa0d2da",
+     "_id": "179341819",
+    "userId": "6789",
+    "locationFsId": "12345",
+    "cocktailId": "131415",
     "rating": 2
     },
- "totalCheckins": 2,
-   
+   ]
+ "totalCheckins": 2,   
 }
 ```
 
 ## Users
+
+### Get all users
+
+Resource: `GET /api/users`
+
+**Example Response**
+
+```
+200 OK
+```
+
+```json
+{
+  "_id": "12345",
+  "googleId": "fourSquarePlaceId",
+  "email": "def",
+  "name": 5,
+}
+```
 
 ## Locations
 
