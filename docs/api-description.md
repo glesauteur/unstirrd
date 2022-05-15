@@ -68,7 +68,7 @@ Resource: `GET /api/cocktails:cocktailId`
 
 **Example with URL Param**
 
-`/api/cocktails/62672ad2772775494fa0d2da`
+`/api/cocktails/12345`
 
 **Example Response**
 
@@ -112,7 +112,7 @@ Resource: `GET /api/cocktails:cocktailId`
 ```
 ### Add a new cocktail
 
-Resource: `POST /api/cocktails:cocktailId`
+Resource: `POST /api/cocktails`
 
 **Example Request Body**
 
@@ -168,6 +168,7 @@ Resource: `POST /api/cocktails:cocktailId`
     },
  "averageRating": 2,
  "checkins": [
+    {
      "_id": "98213791",
     "userId": "12345",
     "locationFsId": "829337",
@@ -202,8 +203,37 @@ Resource: `GET /api/users`
 {
   "_id": "12345",
   "googleId": "fourSquarePlaceId",
-  "email": "def",
-  "name": 5,
+  "email": "abc@email.com",
+  "name": "abc def",
+}
+```
+
+### Get a user
+
+Resource: `GET /api/users/12345`
+
+**Example with URL Param**
+
+`/api/users/12345`
+
+**Example Response**
+
+```
+200 OK
+```
+
+```json
+{
+  "rating": "",
+  "user": 
+     {
+      "_id": "12345",
+      "googleId": "fourSquarePlaceId",
+      "email": "abc@email.com",
+      "name": "abc def",
+     }
+   "cocktail":
+   "location":
 }
 ```
 
