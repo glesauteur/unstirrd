@@ -295,9 +295,9 @@ Resource: `GET /api/users/12345`
 	    }
 	],
 	"location": {
-		"fsq_id": "524a00ba11d2921532e7d511",
-		"...": "..."
-		}
+	    "fsq_id": "524a00ba11d2921532e7d511",
+	    "...": "..."
+	    }
 	},
     ]
 }
@@ -359,22 +359,22 @@ Resource: `GET /api/users/:userId/followers`
 ```
 ```json
 {
-	"followers": [
-		{
-		"_id": "627439af8c8706b8aca0329a",
-		"from": "62707462f13f3e18450ec3c0",
-		"to": "6270740df13f3e18450e48a4",
-		"user": [
-			{
-			"_id": "62707462f13f3e18450ec3c0",
-			"googleId": "106873948020649210758",
-			"email": "glesauteur@gmail.com",
-			"name": "Gabrielle Le Sauteur"
-			}
-		],
-		"checkins": []
-		},
-	]
+  "followers": [
+	{
+	  "_id": "627439af8c8706b8aca0329a",
+	  "from": "62707462f13f3e18450ec3c0",
+	  "to": "6270740df13f3e18450e48a4",
+	  "user": [
+	     {
+	       "_id": "62707462f13f3e18450ec3c0",
+	       "googleId": "106873948020649210758",
+	       "email": "glesauteur@gmail.com",
+	       "name": "Gabrielle Le Sauteur"
+	     }
+	   ],
+	   "checkins": []
+	},
+    ]
 }
 ```
 ### Find all followings for a user and their respective checkins
@@ -392,22 +392,22 @@ Resource: `GET /api/users/:userId/followings`
 ```
 ```json
 {
-	"followings": [
-			{
-			"_id": "627439af8c8706b8aca0329a",
-			"from": "62707462f13f3e18450ec3c0",
-			"to": "6270740df13f3e18450e48a4",
-			"user": [
-				{
-				"_id": "62707462f13f3e18450ec3c0",
-				"googleId": "106873948020649210758",
-				"email": "glesauteur@gmail.com",
-				"name": "Gabrielle Le Sauteur"
-				}
-			],
-			"checkins": []
-		},
-	]
+  "followings": [
+	{
+	  "_id": "627439af8c8706b8aca0329a",
+	  "from": "62707462f13f3e18450ec3c0",
+	  "to": "6270740df13f3e18450e48a4",
+	  "user": [
+		{
+		  "_id": "62707462f13f3e18450ec3c0",
+		  "googleId": "106873948020649210758",
+		  "email": "glesauteur@gmail.com",
+		  "name": "Gabrielle Le Sauteur"
+		}
+	    ],
+	    "checkins": []
+	},
+    ]
 }
 ```
 ### Find if a user is following or not another one
@@ -449,13 +449,13 @@ Resource: `GET /api/locations/search`
 ```json
 {
   "results": [
-		{
-		  "FourSquare Places Result #1"
-		},
-		{
-		  "FourSquare Places Result #2"
-		}
-	],
+	{
+	  "FourSquare Places Result #1"
+	},
+	{
+	  "FourSquare Places Result #2"
+	}
+    ],
 }
 ```
 ### Search for a location with its FourSquare ID
@@ -480,41 +480,41 @@ Resource: `GET /api/locations/:locationFsId`
   "latitude": 45.518853,
   "longitude": -73.583915,
   "categories": [
-		{
-		  "id": 13016,
-		  "name": "Lounge",
-		  "icon": {
-			"prefix": "https://ss3.4sqi.net/img/categories_v2/nightlife/default_",
-			"suffix": ".png"
-			}
-		},
-		{
-		  "id": 13065,
-		  "name": "Restaurant",
-		  "icon": {
-			"prefix": "https://ss3.4sqi.net/img/categories_v2/food/default_",
-			"suffix": ".png"
-			}
-		}
-	],
-	"averageRating": "3.3",
-	"checkins": [
-		{
-		  "_id": "627926f1f268bda18d109a43",
-		  "userId": "6278152af725449881506703",
-		  "locationFsId": "58c8b974951e7d7e08bc6fd8",
-		  "cocktailId": "62672ad2772775494fa0d2da",
-		  "rating": 2
-		},
-		{
-		  "_id": "62792b8b111b894e977ff438",
-		  "userId": "6278152af725449881506704",
-		  "locationFsId": "58c8b974951e7d7e08bc6fd8",
-		  "cocktailId": "62672ad2772775494fa0d2df",
-		  "rating": 5
-		},
-	],
-	"totalCheckins": 3
+	{
+	  "id": 13016,
+	  "name": "Lounge",
+	  "icon": {
+	             "prefix": "https://ss3.4sqi.net/img/categories_v2/nightlife/default_",
+		     "suffix": ".png"
+		  }
+	},
+	{
+	  "id": 13065,
+	  "name": "Restaurant",
+	  "icon": {
+		    "prefix": "https://ss3.4sqi.net/img/categories_v2/food/default_",
+		    "suffix": ".png"
+		  }
+	}
+    ],
+    "averageRating": "3.3",
+    "checkins": [
+	{
+	  "_id": "627926f1f268bda18d109a43",
+	  "userId": "6278152af725449881506703",
+	  "locationFsId": "58c8b974951e7d7e08bc6fd8",
+	  "cocktailId": "62672ad2772775494fa0d2da",
+	  "rating": 2
+	},
+	{
+	  "_id": "62792b8b111b894e977ff438",
+	  "userId": "6278152af725449881506704",
+	  "locationFsId": "58c8b974951e7d7e08bc6fd8",
+	  "cocktailId": "62672ad2772775494fa0d2df",
+	  "rating": 5
+	},
+     ],
+     "totalCheckins": 3
 }
 ```
 ### Find all detailed checkins for a specific locations
@@ -534,43 +534,43 @@ Resource: `GET /api/locations/:locationFsId/checkins`
 ```json
 {
   "locationCocktails": [
-  			{
-			  "_id": "627926f1f268bda18d109a43",
-			  "userId": "6278152af725449881506703",
-			  "locationFsId": "58c8b974951e7d7e08bc6fd8",
-			  "cocktailId": "62672ad2772775494fa0d2da",
-			  "rating": 2,
-			  "cocktail": [
-			  		{
-					  "_id": "62672ad2772775494fa0d2da",
-					  "idDrink": "11023",
-					  "drinkName": "Almeria",
-					  "drinkCategory": "Ordinary Drink",
-					  "alcoholic": true,
-					  "glass": "Cocktail glass",
-					  "instructions": "In a shaker half-filled with ice cubes, combine all of the ingredients. Shake well. Strain into a cocktail glass.",
-					  "image": "https://www.thecocktaildb.com/images/media/drink/rwsyyu1483388181.jpg",
-				          "ingredients": [
-							"Dark rum",
-							"Kahlua",
-							"Egg white"
-							],
-					  "mesure": [
-						"2 oz ",
-						"1 oz ",
-						"1 "
-						]
-					}
+  	{
+	  "_id": "627926f1f268bda18d109a43",
+	  "userId": "6278152af725449881506703",
+	  "locationFsId": "58c8b974951e7d7e08bc6fd8",
+	  "cocktailId": "62672ad2772775494fa0d2da",
+	  "rating": 2,
+	  "cocktail": [
+		{
+		  "_id": "62672ad2772775494fa0d2da",
+		  "idDrink": "11023",
+		  "drinkName": "Almeria",
+		  "drinkCategory": "Ordinary Drink",
+		  "alcoholic": true,
+		  "glass": "Cocktail glass",
+		  "instructions": "In a shaker half-filled with ice cubes, combine all of the ingredients. Shake well. Strain into a cocktail glass.",
+		  "image": "https://www.thecocktaildb.com/images/media/drink/rwsyyu1483388181.jpg",
+		  "ingredients": [
+				  "Dark rum",
+				  "Kahlua",
+				  "Egg white"
+				 ],
+		  "mesure": [
+		             "2 oz ",
+			     "1 oz ",
+			     "1 "
+			     ]
+		  }
 				],
-			  "user": [
-				{
-				  "_id": "6278152af725449881506703",
-				  "googleId": "marc1234567890",
-				  "email": "marc@marc.com",
-				  "name": "Marc-Andre"
-				}
-			]
-		}
+		   "user": [
+			{
+			  "_id": "6278152af725449881506703",
+			  "googleId": "marc1234567890",
+			  "email": "marc@marc.com",
+			  "name": "Marc-Andre"
+		        }
+		    ]
+	       }
 	]
 }
 ```
