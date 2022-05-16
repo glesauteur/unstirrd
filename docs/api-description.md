@@ -64,11 +64,7 @@ Resource: `GET /api/cocktails`
 ```
 ### Search for a specific cocktail
 
-Resource: `GET /api/cocktails:cocktailId`
-
-**Example with URL Param**
-
-`/api/cocktails/12345`
+Resource: `GET /api/cocktails/:cocktailId`
 
 **Example Response**
 
@@ -110,6 +106,7 @@ Resource: `GET /api/cocktails:cocktailId`
    
 }
 ```
+
 ### Add a new cocktail
 
 Resource: `POST /api/cocktails`
@@ -147,46 +144,6 @@ Resource: `POST /api/cocktails`
   
 ```
 
-```
-200 OK
-```
-
-```json
-{
-"cocktail": 
-  { 
-    "_id": "131415",
-    "idDrink": "11023",
-    "drinkName": "Almeria",
-    "drinkCategory": "Ordinary Drink",
-    "alcoholic": "true",
-    "glass": "Cocktail glass",
-    "instructions": "In a shaker half-filled with ice cubes, combine all of the ingredients...",
-    "image": "https://www.thecocktaildb.com/images/media/drink/rwsyyu1483388181.jpg",
-    "ingredients": ["Dark rum", "Kahlua", "Egg white"],
-    "mesure": ["2 oz ", "1 oz ", "1 "]
-    },
- "averageRating": 2,
- "checkins": [
-    {
-     "_id": "98213791",
-     "userId": "12345",
-     "locationFsId": "829337",
-     "cocktailId": "131415",
-     "rating": 2
-    },
-    {
-     "_id": "179341819",
-     "userId": "6789",
-     "locationFsId": "12345",
-     "cocktailId": "131415",
-     "rating": 2
-    },
-   ]
- "totalCheckins": 2,   
-}
-```
-
 ## Users
 
 ### Get all users
@@ -220,11 +177,7 @@ Resource: `GET /api/users`
 
 ### Get a user
 
-Resource: `GET /api/users/12345`
-
-**Example with URL Param**
-
-`/api/users/12345`
+Resource: `GET /api/users/:userId`
 
 **Example Response**
 
@@ -246,11 +199,7 @@ Resource: `GET /api/users/12345`
 
 ### Get checkins for a user
 
-Resource: `GET /api/users/12345`
-
-**Example with URL Param**
-
-`/api/users/12345/checkins`
+Resource: `GET /api/users/:userId/checkins`
 
 **Example Response**
 
@@ -308,10 +257,13 @@ Resource: `GET /api/users/12345`
 Resource: `POST /api/users/:userId/following`
 
 **Example with URL Param & Request Body**
+
 From user:
+
 `/api/users/12345/following`
 
 To user:
+
 ```json
 {
  "toUserId": 6789
@@ -326,11 +278,12 @@ To user:
 
 ### Unfollow a user
 
-Resource: `DELETE /api/users/:userId/unfollowing`
+Resource: `DELETE /api/users/:userId/following`
 
 **Example with URL Param & Request Body**
+
 From user:
-`/api/users/12345/unfollowing`
+`/api/users/12345/following`
 
 To user:
 ```json
@@ -344,13 +297,10 @@ To user:
 ```
 200 OK
 ```
+
 ### Find all followers for a user and their respective checkins
 
 Resource: `GET /api/users/:userId/followers`
-
-**Example with URL Param**
-
-`/api/users/12345/followers`
 
 **Example Response**
 
@@ -377,13 +327,10 @@ Resource: `GET /api/users/:userId/followers`
     ]
 }
 ```
+
 ### Find all followings for a user and their respective checkins
 
 Resource: `GET /api/users/:userId/followings`
-
-**Example with URL Param**
-
-`/api/users/12345/followings`
 
 **Example Response**
 
@@ -412,11 +359,7 @@ Resource: `GET /api/users/:userId/followings`
 ```
 ### Find if a user is following or not another one
 
-Resource: `GET /api/users/:userId/:userFollowingId`
-
-**Example with URL Param**
-
-`/api/users/12345/6789`
+Resource: `GET /api/users/:userId/following/:userFollowingId`
 
 **Example Response**
 
@@ -436,7 +379,7 @@ Resource: `GET /api/users/:userId/:userFollowingId`
 
 Resource: `GET /api/locations/search`
 
-**Example wtih Query Argument**
+**Example**
 
 `/api/locations/search?q=darling&lat=45.5113586192307&long=-73.61271574796966`
 
@@ -458,13 +401,10 @@ Resource: `GET /api/locations/search`
     ],
 }
 ```
+
 ### Search for a location with its FourSquare ID
 
 Resource: `GET /api/locations/:locationFsId`
-
-**Example wtih URL Param**
-
-`/api/locations/58c8b974951e7d7e08bc6fd8`
 
 **Example Response**
 
@@ -517,13 +457,10 @@ Resource: `GET /api/locations/:locationFsId`
      "totalCheckins": 3
 }
 ```
+
 ### Find all detailed checkins for a specific locations
 
 Resource: `GET /api/locations/:locationFsId/checkins`
-
-**Example wtih URL Param**
-
-`/api/locations/58c8b974951e7d7e08bc6fd8/checkins`
 
 **Example Response**
 
