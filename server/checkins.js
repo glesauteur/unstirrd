@@ -17,20 +17,7 @@ router.post("/", async (req, res) => {
     rating: req.body.rating,
   };
 
-  const data = await db.collection("checkins").insertOne(checkin);
-
-  const locationData = await fetch(
-    `https://api.foursquare.com/v3/places/${req.body.locationId}`,
-    {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        Authorization: FS_TOKEN,
-      },
-    }
-  );
-
-  const location = await locationData.json();
+  await db.collection("checkins").insertOne(checkin);
 
   res.status(200).json({ checkin: checkin });
 });

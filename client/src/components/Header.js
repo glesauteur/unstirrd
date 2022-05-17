@@ -53,41 +53,47 @@ const Header = ({ UnstirrdLogo }) => {
           <Logo src={UnstirrdLogo} onClick={handleHomepage} />
         </LogoContainer>
         <ButtonsContainer>
-          <MobileMenu>
-            <MenuIcon onClick={handleHamburgerClick}>
-              <Span></Span>
-              <Span></Span>
-              <Span></Span>
-            </MenuIcon>
-            {hamburgerClicked && (
-              <NavMenu>
-                <HomefeedButton onClick={handleHomefeed}>
+          {user && (
+            <MobileMenu>
+              <MenuIcon onClick={handleHamburgerClick}>
+                <Span></Span>
+                <Span></Span>
+                <Span></Span>
+              </MenuIcon>
+              {hamburgerClicked && (
+                <NavMenu>
+                  <HomefeedButton onClick={handleHomefeed}>
+                    Homefeed
+                  </HomefeedButton>
+                  <MyCheckinsButton onClick={handleCheckins}>
+                    My Checkins
+                  </MyCheckinsButton>
+                  <MyProfileButton onClick={handleProfile}>
+                    Profile
+                  </MyProfileButton>
+                  <LogoutButton onClick={logout}>Logout</LogoutButton>
+                </NavMenu>
+              )}
+            </MobileMenu>
+          )}
+          {user && (
+            <DesktopMenu>
+              <DesktopMenuContainer>
+                <DesktopHomefeedButton onClick={handleHomefeed}>
                   Homefeed
-                </HomefeedButton>
-                <MyCheckinsButton onClick={handleCheckins}>
+                </DesktopHomefeedButton>
+                <DesktopMyCheckinsButton onClick={handleCheckins}>
                   My Checkins
-                </MyCheckinsButton>
-                <MyProfileButton onClick={handleProfile}>
+                </DesktopMyCheckinsButton>
+                <DesktopMyProfileButton onClick={handleProfile}>
                   Profile
-                </MyProfileButton>
-                <LogoutButton onClick={logout}>Logout</LogoutButton>
-              </NavMenu>
-            )}
-          </MobileMenu>
-          <DesktopMenu>
-            <DesktopMenuContainer>
-              <DesktopHomefeedButton onClick={handleHomefeed}>
-                Homefeed
-              </DesktopHomefeedButton>
-              <DesktopMyCheckinsButton onClick={handleCheckins}>
-                My Checkins
-              </DesktopMyCheckinsButton>
-              <DesktopMyProfileButton onClick={handleProfile}>
-                Profile
-              </DesktopMyProfileButton>
-              <DesktopLogoutButton onClick={logout}>Logout</DesktopLogoutButton>
-            </DesktopMenuContainer>
-          </DesktopMenu>
+                </DesktopMyProfileButton>
+                <DesktopLogoutButton onClick={logout}>
+                  Logout
+                </DesktopLogoutButton>
+              </DesktopMenuContainer>
+            </DesktopMenu>
+          )}
         </ButtonsContainer>
       </HeaderContainer>
     </>

@@ -6,7 +6,13 @@ const fetch = require("node-fetch");
 const { getDB } = require("./database");
 const { FS_TOKEN } = process.env;
 
-router.get("/", async (req, res) => {});
+router.get("/", async (req, res) => {
+  const db = getDB();
+
+  const users = await db.collection("users").find().toArray();
+
+  res.status(200).json({ users });
+});
 
 router.get("/:userId", async (req, res) => {
   const db = getDB();
@@ -78,17 +84,17 @@ router.get("/:userId/checkins", async (req, res) => {
   res.status(200).json({ checkins });
 });
 
-router.get("/:userId", async (req, res) => {
-  const db = getDB();
+// router.get("/:userId", async (req, res) => {
+//   const db = getDB();
 
-  const id = req.params.userId;
+//   const id = req.params.userId;
 
-  const user = await db.collection("users").findOne({
-    _id: ObjectId(id),
-  });
+//   const user = await db.collection("users").findOne({
+//     _id: ObjectId(id),
+//   });
 
-  res.status(200).json({ user });
-});
+//   res.status(200).json({ user });
+// });
 
 router.post("/:userId/following", async (req, res) => {
   const db = getDB();
