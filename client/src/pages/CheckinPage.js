@@ -14,6 +14,7 @@ const CheckinPage = () => {
   const [error, setError] = useState(false);
   const [newCocktail, setNewCocktail] = useState(false);
   const [reviewSubmitted, setReviewSubmitted] = useState(false);
+  const [location, setLocation] = useState(null);
 
   const { user } = React.useContext(AuthContext);
 
@@ -54,6 +55,24 @@ const CheckinPage = () => {
     }
   };
 
+  useEffect(() => {
+    const findLocationInfo = async function () {
+      const response = await fetch(`/api/locations/${locationId}`);
+      const data = await response.json();
+      setLocation(data);
+    };
+
+    findLocationInfo();
+  }, []);
+
+  if (!location) {
+    return (
+      <Loading>
+        <img src="/loading.svg" alt="loading-spinner" />
+      </Loading>
+    );
+  }
+
   const stars = [1, 2, 3, 4, 5].map((r) => {
     return (
       <Star
@@ -80,8 +99,8 @@ const CheckinPage = () => {
       <Container>
         <CheckinWrapper>
           <form onSubmit={handleSubmit}>
-            <Name>Darling</Name>
-            <Address>1862 Blvd de Maisonneuve O, Montréal QC H3H 1J8</Address>
+            <Name>{location.name}</Name>
+            <Address>{location.address}</Address>
             <hr />
             <Cocktail>
               <Title>What did you drink?</Title>
@@ -110,6 +129,13 @@ const CheckinPage = () => {
     </>
   );
 };
+
+const Loading = styled.div`
+  width: 100vw;
+  height: 100vh;
+  text-align: center;
+  margin-top: 25vh;
+`;
 
 const Container = styled.div`
   display: flex;

@@ -54,7 +54,6 @@ const SearchBar = () => {
     if (searchValue === null) return;
 
     const findLocationsOrCocktails = async function () {
-      console.log(latLong);
       if (title === "Where do you want to go out?") {
         const response = await fetch(
           `/api/locations/search?q=${searchValue}&lat=${latLong.lat}&long=${latLong.long}`
