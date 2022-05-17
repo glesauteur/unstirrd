@@ -3,7 +3,7 @@ Unstirrd is a cocktail review app. Want to know where the best Negroni is in Mon
 
 Unstirrd is inspired by the app [Untappd](https://untappd.com/) but adapted to cocktails instead of beers.
 
-For screenshots of the app, with the [screenshots](docs/screenshots.md) file.
+For screenshots of the app, view the [screenshots](docs/screenshots.md) file.
 
 ## Tech Stack
 
