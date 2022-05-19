@@ -43,6 +43,7 @@ const findOrCreateByGoogleId = async (profile) => {
           googleId: profile.id,
           email: profile.emails[0].value,
           name: profile.displayName,
+          picture: profile.photos[0].value,
         },
       },
       {

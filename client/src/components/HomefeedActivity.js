@@ -6,65 +6,55 @@ import { useNavigate, useParams } from "react-router-dom";
 import { AiFillStar } from "react-icons/ai";
 import { AiOutlineStar } from "react-icons/ai";
 
-const HomefeedFollowerCheckin = ({ following }) => {
+const HomefeedActivity = ({ checkin }) => {
   const navigate = useNavigate();
 
   const handleUserClick = () => {
-    let userId = following.user[0]._id;
+    let userId = checkin.user[0]._id;
     navigate(`/profile/${userId}/checkins`);
   };
 
-  let followingCheckins = following.checkins.map((followingCheckin) => {
-    const stars = [1, 2, 3, 4, 5].map((r) => {
-      return (
-        <Star key={r}>
-          {followingCheckin.rating >= r ? <AiFillStar /> : <AiOutlineStar />}
-        </Star>
-      );
-    });
-
-    console.log(following);
+  const stars = [1, 2, 3, 4, 5].map((r) => {
     return (
-      <>
-        <CheckinBlock>
-          <div>
-            <div>
-              <Name onClick={handleUserClick}>{following.user[0].name}</Name>{" "}
-              had a
-              <Strong>
-                {" "}
-                <Cocktail
-                  onClick={() => {
-                    navigate(`/cocktail/${followingCheckin.cocktail[0]._id}`);
-                  }}
-                >
-                  {followingCheckin.cocktail[0].drinkName}
-                </Cocktail>{" "}
-              </Strong>
-            </div>
-          </div>
-          <div>
-            at{" "}
-            <Strong>
-              <Location
-                onClick={() => {
-                  navigate(`/location/${followingCheckin.location.fsq_id}`);
-                }}
-              >
-                {followingCheckin.location.name}
-              </Location>
-            </Strong>
-          </div>
-
-          <StarsBlock>{stars}</StarsBlock>
-        </CheckinBlock>
-      </>
+      <Star key={r}>
+        {checkin.rating >= r ? <AiFillStar /> : <AiOutlineStar />}
+      </Star>
     );
   });
 
   return (
     <>
-      <div>{followingCheckins}</div>
+      <CheckinBlock>
+        <div>
+          <div>
+            <Name onClick={handleUserClick}>{checkin.user[0].name}</Name> had a
+            <Strong>
+              {" "}
+              <Cocktail
+                onClick={() => {
+                  navigate(`/cocktail/${checkin.cocktail[0]._id}`);
+                }}
+              >
+                {checkin.cocktail[0].drinkName}
+              </Cocktail>{" "}
+            </Strong>
+          </div>
+        </div>
+        <div>
+          at{" "}
+          <Strong>
+            <Location
+              onClick={() => {
+                navigate(`/location/${checkin.location.fsq_id}`);
+              }}
+            >
+              {checkin.location.name}
+            </Location>
+          </Strong>
+        </div>
+
+        <StarsBlock>{stars}</StarsBlock>
+      </CheckinBlock>
     </>
   );
 };
@@ -120,4 +110,4 @@ const Star = styled.span`
   color: var(--primary-color);
 `;
 
-export default HomefeedFollowerCheckin;
+export default HomefeedActivity;

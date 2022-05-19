@@ -38,6 +38,7 @@ app.get("/api/current-user", function (req, res) {
     id: req.user._id,
     email: req.user.email,
     name: req.user.name,
+    picture: req.user.picture,
   });
 });
 

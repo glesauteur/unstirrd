@@ -84,18 +84,6 @@ router.get("/:userId/checkins", async (req, res) => {
   res.status(200).json({ checkins });
 });
 
-// router.get("/:userId", async (req, res) => {
-//   const db = getDB();
-
-//   const id = req.params.userId;
-
-//   const user = await db.collection("users").findOne({
-//     _id: ObjectId(id),
-//   });
-
-//   res.status(200).json({ user });
-// });
-
 router.post("/:userId/following", async (req, res) => {
   const db = getDB();
 
@@ -180,14 +168,7 @@ router.get("/:userId/followings", async (req, res) => {
     ])
     .toArray();
 
-  const followingsWithCheckins = await Promise.all(
-    followings.map(async (following) => {
-      const checkins = await getCheckinsForUser(following.to);
-      return { ...following, checkins };
-    })
-  );
-
-  res.status(200).json({ followings: followingsWithCheckins });
+  res.status(200).json({ followings: followings });
 });
 
 router.get("/:userId/:userFollowingId", async (req, res) => {

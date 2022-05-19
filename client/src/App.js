@@ -79,15 +79,7 @@ function App() {
                 </AuthenticatedRoute>
               }
             />
-            <Route
-              path="/profile/:userId"
-              exact
-              element={
-                <AuthenticatedRoute>
-                  <ProfilePage />
-                </AuthenticatedRoute>
-              }
-            />
+
             <Route
               path="/location/:locationId/checkins"
               exact
