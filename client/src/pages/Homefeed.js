@@ -1,23 +1,44 @@
+import { faHandBackFist } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { AuthContext } from "../auth/AuthContext";
-import HomefeedFollowerCheckin from "../components/HomefeedFollowerCheckin";
+import HomefeedActivity from "../components/HomefeedActivity";
 
 const Homefeed = () => {
   const { user } = React.useContext(AuthContext);
-  const [followingCheckins, setFollowingCheckins] = useState([]);
+  const [followingCheckins, setFollowingCheckins] = useState(null);
+  const [allCheckins, setAllCheckins] = useState(null);
+  const [toggle, setToggle] = useState(false);
+  const [numItems, setNumItems] = useState(8);
+
+  const handleToggle = () => {
+    console.log("TOOGLE");
+    if (toggle) {
+      setToggle(false);
+    } else {
+      setToggle(true);
+    }
+  };
 
   useEffect(() => {
     const getFollowingCheckins = async function () {
-      const response = await fetch(`api/users/${user.id}/followings`);
+      const response = await fetch(`api/checkins?followingsOnly=true`);
       const data = await response.json();
 
-      setFollowingCheckins(data.followings);
+      setFollowingCheckins(data.checkins);
     };
+    const getAllCheckins = async function () {
+      const response = await fetch(`api/checkins`);
+      const data = await response.json();
+
+      setAllCheckins(data.checkins);
+    };
+
     getFollowingCheckins();
+    getAllCheckins();
   }, []);
 
-  if (followingCheckins.length < 1) {
+  if (!followingCheckins || !allCheckins) {
     return (
       <Loading>
         <img src="/loading.svg" alt="loading-spinner" />
@@ -25,15 +46,28 @@ const Homefeed = () => {
     );
   }
 
-  const allFollowers = followingCheckins.map((following) => {
-    return <HomefeedFollowerCheckin following={following} />;
+  const followingActivities = followingCheckins.map((following) => {
+    return <HomefeedActivity checkin={following} />;
+  });
+
+  const checkinsActivities = allCheckins.map((checkin) => {
+    return <HomefeedActivity checkin={checkin} />;
   });
 
   return (
     <Container>
       <SubContainer>
-        <Title>Recent followers activities</Title>
-        <div>{allFollowers}</div>
+        <Title>Recent activities</Title>
+        <ToggleContainer>
+          <SubTitle>Follower activities only</SubTitle>
+          <Input type="checkbox" id="switch" onClick={handleToggle} />
+          <Label for="switch">Toggle</Label>
+        </ToggleContainer>
+        {!toggle ? (
+          <div>{checkinsActivities}</div>
+        ) : (
+          <div>{followingActivities}</div>
+        )}
       </SubContainer>
     </Container>
   );
@@ -65,9 +99,59 @@ const SubContainer = styled.div`
 `;
 
 const Title = styled.h2`
-  font-size: 20px;
+  font-size: 25px;
   color: white;
   margin-bottom: 20px;
+`;
+
+const SubTitle = styled.h3`
+  font-size: 16px;
+  color: white;
+`;
+
+const ToggleContainer = styled.span`
+  display: flex;
+  margin-bottom: 20px;
+  align-items: center;
+`;
+
+const Input = styled.input`
+  height: 0;
+  width: 0;
+  visibility: hidden;
+
+  :checked + label {
+    background: #bada55;
+  }
+  :checked + label:after {
+    left: calc(100% - 4px);
+    transform: translateX(-100%);
+  }
+`;
+
+const Label = styled.label`
+  cursor: pointer;
+  text-indent: -9999px;
+  width: 50px;
+  height: 25px;
+  background: grey;
+  display: block;
+  border-radius: 100px;
+  position: relative;
+  :after {
+    content: "";
+    position: absolute;
+    top: 4px;
+    left: 5px;
+    width: 16px;
+    height: 16px;
+    background: #fff;
+    border-radius: 90px;
+    transition: 0.3s;
+  }
+  :active:after {
+    width: 16px;
+  }
 `;
 
 const Hr = styled.hr`

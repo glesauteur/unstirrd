@@ -18,58 +18,62 @@ const DBbatchImport = async () => {
 
   const db = client.db("unstirrd");
 
-  //   const addNewUsers = await db.collection("users").insertMany([
-  //     {
-  //       googleId: "marc1234567890",
-  //       email: "marc@marc.com",
-  //       name: "Marc-Andre",
-  //     },
-  //     {
-  //       googleId: "clochette1234567890",
-  //       email: "clochette@clochette.com",
-  //       name: "Clochette",
-  //     },
-  //     {
-  //       googleId: "dwight1234567890",
-  //       email: "dwight@dwight.com",
-  //       name: "Dwight",
-  //     },
-  //     {
-  //       googleId: "michael1234567890",
-  //       email: "michael@michael.com",
-  //       name: "Michael",
-  //     },
-  //     {
-  //       googleId: "pam1234567890",
-  //       email: "pam@pam.com",
-  //       name: "Pam",
-  //     },
-  //     {
-  //       googleId: "kevin1234567890",
-  //       email: "kevin@kevin.com",
-  //       name: "Kevin",
-  //     },
-  //     {
-  //       googleId: "ryan1234567890",
-  //       email: "ryan@ryan.com",
-  //       name: "Ryan",
-  //     },
-  //     {
-  //       googleId: "erin1234567890",
-  //       email: "erin@erin.com",
-  //       name: "Erin",
-  //     },
-  //     {
-  //       googleId: "angela1234567890",
-  //       email: "angela@angela.com",
-  //       name: "Angela",
-  //     },
-  //     {
-  //       googleId: "oscar1234567890",
-  //       email: "oscar@oscar.com",
-  //       name: "Oscar",
-  //     },
-  //   ]);
+  const addNewUsers = await db.collection("users").insertMany([
+    {
+      googleId: "marc1234567890",
+      email: "marc@marc.com",
+      name: "Marc-Andre",
+      picture: "",
+    },
+    {
+      googleId: "clochette1234567890",
+      email: "clochette@clochette.com",
+      name: "Clochette",
+      picture: "",
+    },
+    {
+      googleId: "dwight1234567890",
+      email: "dwight@dwight.com",
+      name: "Dwight",
+      picture: "",
+    },
+    {
+      googleId: "pam1234567890",
+      email: "pam@pam.com",
+      name: "Pam",
+      picture: "",
+    },
+    {
+      googleId: "kevin1234567890",
+      email: "kevin@kevin.com",
+      name: "Kevin",
+      picture: "",
+    },
+    {
+      googleId: "ryan1234567890",
+      email: "ryan@ryan.com",
+      name: "Ryan",
+      picture: "",
+    },
+    {
+      googleId: "erin1234567890",
+      email: "erin@erin.com",
+      name: "Erin",
+      picture: "",
+    },
+    {
+      googleId: "angela1234567890",
+      email: "angela@angela.com",
+      name: "Angela",
+      picture: "",
+    },
+    {
+      googleId: "oscar1234567890",
+      email: "oscar@oscar.com",
+      name: "Oscar",
+      picture: "",
+    },
+  ]);
 
   const marc = await db
     .collection("users")
@@ -82,10 +86,6 @@ const DBbatchImport = async () => {
   const dwight = await db
     .collection("users")
     .findOne({ googleId: "dwight1234567890" });
-
-  const michael = await db
-    .collection("users")
-    .findOne({ googleId: "michael1234567890" });
 
   const pam = await db
     .collection("users")
@@ -117,78 +117,74 @@ const DBbatchImport = async () => {
 
   const gab2 = await db
     .collection("users")
-    .findOne({ googleId: "62707462f13f3e18450ec3c0" });
+    .findOne({ googleId: "106873948020649210758" });
 
-  const cocktail1 = await db
-    .collection("cocktails")
-    .findOne({ idDrink: "11023" });
+  const michael = await db
+    .collection("users")
+    .findOne({ googleId: "102891899503500148636" });
 
-  //   const addNewFollows = await db.collection("follows").insertMany([
-  //     {
-  //       from: ObjectId(oscar._id),
-  //       to: ObjectId(angela._id),
-  //     },
-  //     {
-  //       from: ObjectId(oscar._id),
-  //       to: ObjectId(gab1._id),
-  //     },
-  //     {
-  //       from: ObjectId(gab1._id),
-  //       to: ObjectId(oscar._id),
-  //     },
-  //     {
-  //       from: ObjectId(gab1._id),
-  //       to: ObjectId(marc._id),
-  //     },
-  //     {
-  //       from: ObjectId(gab1._id),
-  //       to: ObjectId(clochette._id),
-  //     },
-  //     {
-  //       from: ObjectId(gab1._id),
-  //       to: ObjectId(pam._id),
-  //     },
-  //     {
-  //       from: ObjectId(gab1._id),
-  //       to: ObjectId(angela._id),
-  //     },
-  //     {
-  //       from: ObjectId(gab1._id),
-  //       to: ObjectId(michael._id),
-  //     },
-  //     {
-  //       from: ObjectId(michael._id),
-  //       to: ObjectId(angela._id),
-  //     },
-  //     {
-  //       from: ObjectId(marc._id),
-  //       to: ObjectId(clochette._id),
-  //     },
-  //     {
-  //       from: ObjectId(dwight._id),
-  //       to: ObjectId(michael._id),
-  //     },
-  //     {
-  //       from: ObjectId(pam._id),
-  //       to: ObjectId(ryan._id),
-  //     },
-  //     {
-  //       from: ObjectId(clochette._id),
-  //       to: ObjectId(kevin._id),
-  //     },
-  //     {
-  //       from: ObjectId(clochette._id),
-  //       to: ObjectId(michael._id),
-  //     },
-  //     {
-  //       from: ObjectId(kevin._id),
-  //       to: ObjectId(angela._id),
-  //     },
-  //     {
-  //       from: ObjectId(michael._id),
-  //       to: ObjectId(pam._id),
-  //     },
-  //   ]);
+  const addNewFollows = await db.collection("follows").insertMany([
+    {
+      from: ObjectId(oscar._id),
+      to: ObjectId(angela._id),
+    },
+    {
+      from: ObjectId(oscar._id),
+      to: ObjectId(gab1._id),
+    },
+    {
+      from: ObjectId(michael._id),
+      to: ObjectId(gab1._id),
+    },
+    {
+      from: ObjectId(gab1._id),
+      to: ObjectId(michael._id),
+    },
+    {
+      from: ObjectId(gab2._id),
+      to: ObjectId(michael._id),
+    },
+    {
+      from: ObjectId(michael._id),
+      to: ObjectId(gab2._id),
+    },
+    {
+      from: ObjectId(gab1._id),
+      to: ObjectId(oscar._id),
+    },
+    {
+      from: ObjectId(gab1._id),
+      to: ObjectId(marc._id),
+    },
+    {
+      from: ObjectId(gab1._id),
+      to: ObjectId(clochette._id),
+    },
+    {
+      from: ObjectId(gab1._id),
+      to: ObjectId(pam._id),
+    },
+    {
+      from: ObjectId(gab1._id),
+      to: ObjectId(angela._id),
+    },
+    {
+      from: ObjectId(marc._id),
+      to: ObjectId(clochette._id),
+    },
+    {
+      from: ObjectId(pam._id),
+      to: ObjectId(ryan._id),
+    },
+    {
+      from: ObjectId(clochette._id),
+      to: ObjectId(kevin._id),
+    },
+    {
+      from: ObjectId(kevin._id),
+      to: ObjectId(angela._id),
+    },
+  ]);
   const addNewCheckins = await db.collection("checkins").insertMany([
     {
       userId: ObjectId(oscar._id),
@@ -219,6 +215,25 @@ const DBbatchImport = async () => {
       locationFsId: "4bdf009389ca76b0cfab5d5e",
       cocktailId: ObjectId("62672ad2772775494fa0d30c"),
       rating: 2,
+    },
+
+    {
+      userId: ObjectId(gab1._id),
+      locationFsId: "4bdf009389ca76b0cfab5d5e",
+      cocktailId: ObjectId("62672ad2772775494fa0d2f0"),
+      rating: 3,
+    },
+    {
+      userId: ObjectId(michael._id),
+      locationFsId: "4bdf009389ca76b0cfab5d5e",
+      cocktailId: ObjectId("62672ad2772775494fa0d302"),
+      rating: 5,
+    },
+    {
+      userId: ObjectId(gab2._id),
+      locationFsId: "4bdf009389ca76b0cfab5d5e",
+      cocktailId: ObjectId("62672ad2772775494fa0d2ec"),
+      rating: 1,
     },
   ]);
 

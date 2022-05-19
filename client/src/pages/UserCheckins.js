@@ -4,6 +4,9 @@ import { useParams, useNavigate } from "react-router-dom";
 import UserCheckin from "../components/UserCheckin";
 import { AuthContext } from "../auth/AuthContext";
 
+// source: <a href="https://www.flaticon.com/free-icons/user" title="user icons">User icons created by Smashicons - Flaticon</a>
+import UserLogo from "../assets/user.png";
+
 const UserCheckins = () => {
   const { user } = React.useContext(AuthContext);
   let { userId } = useParams();
@@ -94,13 +97,29 @@ const UserCheckins = () => {
     );
   });
 
+  console.log(userInfo.picture.length);
+
   return (
     <>
       <InfoContainer>
         {userId === user.id ? (
-          <Title>My Checkins</Title>
+          <>
+            <Title>My Checkins</Title>
+            {userInfo.picture.length > 0 ? (
+              <Img alt="profile-picture" src={userInfo.picture} />
+            ) : (
+              <Img alt="profile-user" src={UserLogo} />
+            )}
+          </>
         ) : (
-          <Title>{userInfo.email}'s Checkins</Title>
+          <>
+            <Title>{userInfo.name}'s Checkins</Title>
+            {userInfo.picture.length > 0 ? (
+              <Img alt="profile-picture" src={userInfo.picture} />
+            ) : (
+              <Img alt="profile-user" src={UserLogo} />
+            )}
+          </>
         )}
         {userId === user.id ? (
           <></>
@@ -153,6 +172,13 @@ const Title = styled.h2`
   color: white;
   text-align: center;
   font-size: 25px;
+`;
+
+const Img = styled.img`
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
 `;
 
 const FollowButtonContainer = styled.div`
