@@ -63,7 +63,7 @@ const CheckinPage = () => {
     };
 
     findLocationInfo();
-  }, []);
+  }, [locationId]);
 
   if (!location) {
     return (

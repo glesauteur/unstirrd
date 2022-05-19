@@ -58,8 +58,8 @@ const CocktailPage = () => {
     ingredientAndMesure.push(ingredient + ":" + " " + mesure[index]);
   });
 
-  const allIngredientsAndMesures = ingredientAndMesure.map((ing) => {
-    return <p>{ing}</p>;
+  const allIngredientsAndMesures = ingredientAndMesure.map((ing, index) => {
+    return <p key={index}>{ing}</p>;
   });
 
   return (

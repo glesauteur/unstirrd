@@ -26,7 +26,6 @@ const CocktailsSearchBar = ({ setCocktail }) => {
         <Cocktail
           key={cocktail._id}
           onClick={() => {
-            console.log(cocktail);
             setInput(cocktail.drinkName);
             setCocktail(cocktail._id);
           }}

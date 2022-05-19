@@ -12,7 +12,6 @@ const Homefeed = () => {
   const [numItems, setNumItems] = useState(8);
 
   const handleToggle = () => {
-    console.log("TOOGLE");
     if (toggle) {
       setToggle(false);
     } else {
@@ -46,12 +45,20 @@ const Homefeed = () => {
     );
   }
 
-  const followingActivities = followingCheckins.map((following) => {
-    return <HomefeedActivity checkin={following} />;
+  const followingActivities = followingCheckins.map((following, index) => {
+    return (
+      <span key={index}>
+        <HomefeedActivity checkin={following} />
+      </span>
+    );
   });
 
-  const checkinsActivities = allCheckins.map((checkin) => {
-    return <HomefeedActivity checkin={checkin} />;
+  const checkinsActivities = allCheckins.map((checkin, index) => {
+    return (
+      <span key={index}>
+        <HomefeedActivity checkin={checkin} />
+      </span>
+    );
   });
 
   return (

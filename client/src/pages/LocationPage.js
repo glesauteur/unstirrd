@@ -50,14 +50,16 @@ const LocationPage = () => {
     );
   }
 
-  const locationCategories = location.categories.map((locationCategorie) => {
-    return (
-      <>
-        <div key={location.fsq_id}>{locationCategorie.name} </div>
-        <span> / </span>
-      </>
-    );
-  });
+  const locationCategories = location.categories.map(
+    (locationCategorie, index) => {
+      return (
+        <span key={index}>
+          <div key={location.fsq_id}>{locationCategorie.name} </div>
+          <span> / </span>
+        </span>
+      );
+    }
+  );
 
   return (
     <>

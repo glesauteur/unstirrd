@@ -39,7 +39,7 @@ const UserCheckin = ({ userCheckin, locationId }) => {
 
 const CheckinsWrapper = styled.div`
   height: 170px;
-  width: 300px;
+  width: 500px;
   background-color: white;
   border-radius: 10px;
   display: flex;
@@ -47,6 +47,9 @@ const CheckinsWrapper = styled.div`
   justify-content: center;
   padding: 0 15px;
   box-shadow: 3px 3px 3px #ff855f;
+  @media (max-width: 600px) {
+    width: 350px;
+  }
 `;
 
 const Name = styled.p`

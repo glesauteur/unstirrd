@@ -108,8 +108,6 @@ const SearchBar = () => {
     }
   }
 
-  console.log(latLong);
-
   return (
     <SearchContainer onClick={handleClick}>
       <Title>{title}</Title>

@@ -1,3 +1,4 @@
+import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import Signin from "./pages/Signin";
@@ -11,7 +12,6 @@ import Header from "./components/Header";
 import UnstirrdLogo from "./Unstirrd.png";
 import LocationCheckins from "./pages/LocationCheckins";
 import MyProfilePage from "./pages/MyProfilePage";
-import ProfilePage from "./pages/ProfilePage";
 import Homefeed from "./pages/Homefeed";
 import CocktailPage from "./pages/CocktailPage";
 import CocktailCheckinPage from "./pages/CocktailCheckinPage";

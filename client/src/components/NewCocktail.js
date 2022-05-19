@@ -16,7 +16,6 @@ const NewCocktail = ({ cocktail, setCocktail }) => {
   const handleAddCocktail = async (e) => {
     e.preventDefault();
     if (newCocktail.drinkName === "") {
-      console.log(newCocktail.ingredients.values());
       setError("Drink Name is missing!");
       return;
     } else if (newCocktail.glass === "") {
