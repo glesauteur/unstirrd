@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import UserCheckin from "../components/UserCheckin";
 import { AuthContext } from "../auth/AuthContext";
-
+import FollowingInfo from "../components/FollowingInfo";
 // source: <a href="https://www.flaticon.com/free-icons/user" title="user icons">User icons created by Smashicons - Flaticon</a>
 import UserLogo from "../assets/user.png";
 
@@ -19,7 +19,7 @@ const UserCheckins = () => {
       .then((response) => response.json())
       .then((response) => setUserCheckins(response.checkins))
       .catch((err) => console.error(err));
-  }, []);
+  }, [userId]);
 
   useEffect(() => {
     const findUserInfo = async function () {
@@ -36,7 +36,7 @@ const UserCheckins = () => {
 
     isFollowing();
     findUserInfo();
-  }, []);
+  }, [userId, user.id]);
 
   const handleFollow = async (e) => {
     if (!following) {
@@ -88,16 +88,22 @@ const UserCheckins = () => {
     );
   }
 
-  const allCheckins = userCheckins.map((userCheckin) => {
+  const allCheckins = userCheckins.map((userCheckin, index) => {
     return (
-      <UserCheckin
-        locationId={userCheckin.location.fsq_id}
-        userCheckin={userCheckin}
-      ></UserCheckin>
+      <span key={index}>
+        {user.id !== userId && <FollowingInfo userId={userId} />}
+
+        <div key={index}>
+          {user.id !== userId && <Subtitle>Checkins</Subtitle>}
+
+          <UserCheckin
+            locationId={userCheckin.location.fsq_id}
+            userCheckin={userCheckin}
+          ></UserCheckin>
+        </div>
+      </span>
     );
   });
-
-  console.log(userInfo.picture.length);
 
   return (
     <>
@@ -113,7 +119,7 @@ const UserCheckins = () => {
           </>
         ) : (
           <>
-            <Title>{userInfo.name}'s Checkins</Title>
+            <Title>{userInfo.name}'s Profile</Title>
             {userInfo.picture.length > 0 ? (
               <Img alt="profile-picture" src={userInfo.picture} />
             ) : (
@@ -135,6 +141,7 @@ const UserCheckins = () => {
           </FollowButtonContainer>
         )}
       </InfoContainer>
+
       <Container>{allCheckins}</Container>
     </>
   );
@@ -174,10 +181,17 @@ const Title = styled.h2`
   font-size: 25px;
 `;
 
+const Subtitle = styled.h2`
+  color: white;
+  font-size: 22px;
+  margin-bottom: 10px;
+  margin-top: 20px;
+`;
+
 const Img = styled.img`
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
 }
 `;
 

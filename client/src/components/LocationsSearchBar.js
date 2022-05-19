@@ -75,8 +75,6 @@ const LocationsSearchBar = ({ setLocation }) => {
     setInput(val);
   };
 
-  console.log(searchValue);
-
   return (
     <>
       <SearchContainer onClick={handleClick}>

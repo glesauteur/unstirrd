@@ -8,7 +8,6 @@ const Header = ({ UnstirrdLogo }) => {
   const navigate = useNavigate();
 
   const [hamburgerClicked, setHamburgerClicked] = useState(false);
-  const [hamburger, setHamburger] = useState(false);
 
   async function logout() {
     const res = await fetch("/api/auth/logout", { method: "POST" });
@@ -109,14 +108,10 @@ const HeaderContainer = styled.div`
 const LogoContainer = styled.div``;
 
 const Logo = styled.img`
-  width: 40%;
-  position: fixed;
+  width: 55%;
   cursor: pointer;
-  @media (min-width: 1200px) {
-    width: 10%;
-  }
-  @media (min-width: 768px) and (max-width: 1024px) {
-    width: 20%;
+  @media (min-width: 768px) {
+    width: 30%;
   }
 `;
 
