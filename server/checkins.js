@@ -48,6 +48,7 @@ router.get("/", async (req, res) => {
     ])
     .toArray();
 
+  // To get all the details about the locations
   const checkins = Promise.all(
     checkinsInfo.map(async (checkin) => {
       const res = await fetch(

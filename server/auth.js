@@ -35,6 +35,8 @@ passport.use(
       callbackURL: GOOGLE_CALLBACK_URL,
     },
     async function (accessToken, refreshToken, profile, cb) {
+      // Here we have a Google account that we want to turn into an Unstirrd account
+      // by adding it or finding it in our DB by its Google ID.
       const user = await findOrCreateByGoogleId(profile);
       return cb(null, user);
     }

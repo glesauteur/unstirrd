@@ -12,6 +12,7 @@ const options = {
 };
 
 const DBbatchImport = async () => {
+  // BatchImport to have some fake data in the DB for the demo
   const client = await new MongoClient(MONGO_URI, options);
 
   await client.connect();
