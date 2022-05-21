@@ -31,6 +31,77 @@ Resource: `POST /api/checkins`
   "rating": 5,
 }
 ```
+### Get all checmins
+
+Resource: `GET /api/checkins`
+
+**Example Response**
+
+```
+200 OK
+```
+
+```json
+{
+  "rating" 1,
+  "user": [
+     {
+       "_id": "123",
+       "googleId": "456",
+       "email": "email@email.com",
+       "name": "John Abc",
+       "picture": "https://picture.com",
+     }
+     ],
+  "cocktail": [
+     {
+       "_id": "12345"
+       "...": "...",
+     }
+     ]
+  "location": 
+     {
+       "fsq_id": "12344ab",
+       "...": "...",
+     }	
+}
+```
+
+**Example wtih Query Argument to only show the checkins of the followings of the user**
+
+`/api/checkins?followingsOnly=true`
+
+**Example Response**
+
+```
+200 OK
+```
+
+```json
+{
+  "rating" 1,
+  "user": [
+     {
+       "_id": "123",
+       "googleId": "456",
+       "email": "email@email.com",
+       "name": "John Abc",
+       "picture": "https://picture.com",
+     }
+     ],
+  "cocktail": [
+     {
+       "_id": "12345"
+       "...": "...",
+     }
+     ]
+  "location": 
+     {
+       "fsq_id": "12344ab",
+       "...": "...",
+     }	
+}
+```
 
 ## Cocktails
 
