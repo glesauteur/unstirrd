@@ -55,18 +55,33 @@ const SearchBar = () => {
 
     const findLocationsOrCocktails = async function () {
       if (title === "Where do you want to go out?") {
-        const response = await fetch(
-          `/api/locations/search?q=${searchValue}&lat=${latLong.lat}&long=${latLong.long}`
-        );
-        const data = await response.json();
+        if (!latLong) {
+          const response = await fetch(
+            `/api/locations/search?q=${searchValue}&lat=45.508888&long=-73.561668`
+          );
+          const data = await response.json();
 
-        setSearchResults(
-          data.results.filter((result) => {
-            return result.place.categories.some((category) => {
-              return category.id >= 13000 && category.id < 14000;
-            });
-          })
-        );
+          setSearchResults(
+            data.results.filter((result) => {
+              return result.place.categories.some((category) => {
+                return category.id >= 13000 && category.id < 14000;
+              });
+            })
+          );
+        } else {
+          const response = await fetch(
+            `/api/locations/search?q=${searchValue}&lat=${latLong.lat}&long=${latLong.long}`
+          );
+          const data = await response.json();
+
+          setSearchResults(
+            data.results.filter((result) => {
+              return result.place.categories.some((category) => {
+                return category.id >= 13000 && category.id < 14000;
+              });
+            })
+          );
+        }
       } else if (title === "What do you want to drink?") {
         const response = await fetch(`/api/cocktails?q=${searchValue}`);
         const data = await response.json();
@@ -216,16 +231,6 @@ const CocktailSearch = styled.p`
   }
 `;
 
-// const Cocktail = styled.div`
-//   border-bottom-left-radius: 10px;
-//   border-bottom-right-radius: 10px;
-//   padding: 8px;
-//   cursor: pointer;
-//   :hover {
-//     background-color: #f3f3f3;
-//   }
-// `;
-
 const Dropdown = styled.div`
   display: flex;
   flex-direction: column;
@@ -238,6 +243,7 @@ const BarsContainer = styled.div`
   border-bottom-right-radius: 10px;
   box-shadow: 6px 6px 6px lightgray;
   transition: 0.2s;
+  max-width: 450px;
 `;
 
 const CocktailsContainer = styled.div`
