@@ -29,6 +29,7 @@ function App() {
               path="/"
               exact
               element={
+                // AuthenticatedRoute to only show the website sections if your logged in
                 <AuthenticatedRoute>
                   <HomePage />
                 </AuthenticatedRoute>

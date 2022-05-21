@@ -17,6 +17,7 @@ const batchImport = async () => {
 
   let newArray = [];
 
+  // Importing all cocktails from the Cocktail DB API to our MongoDB
   for (let i = 0; i < alphabet.length; i++) {
     let response = await fetch(
       `https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${alphabet[i]}`

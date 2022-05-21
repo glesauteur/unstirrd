@@ -10,6 +10,7 @@ router.get("/", async (req, res) => {
 
   const query = req.query.q;
 
+  // To look for cocktails in our collection, we use the autocomplete MongoDB index.
   const cocktails = await db
     .collection("cocktails")
     .aggregate([
