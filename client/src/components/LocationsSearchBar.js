@@ -16,18 +16,33 @@ const LocationsSearchBar = ({ setLocation }) => {
 
   useEffect(() => {
     const findLocations = async function () {
-      const response = await fetch(
-        `/api/locations/search?q=${searchValue}&lat=${latLong.lat}&long=${latLong.long}`
-      );
-      const data = await response.json();
+      if (!latLong) {
+        const response = await fetch(
+          `/api/locations/search?q=${searchValue}&lat=45.508888&long=-73.561668`
+        );
+        const data = await response.json();
 
-      setSearchResults(
-        data.results.filter((result) => {
-          return result.place.categories.some((category) => {
-            return category.id >= 13000 && category.id < 14000;
-          });
-        })
-      );
+        setSearchResults(
+          data.results.filter((result) => {
+            return result.place.categories.some((category) => {
+              return category.id >= 13000 && category.id < 14000;
+            });
+          })
+        );
+      } else {
+        const response = await fetch(
+          `/api/locations/search?q=${searchValue}&lat=${latLong.lat}&long=${latLong.long}`
+        );
+        const data = await response.json();
+
+        setSearchResults(
+          data.results.filter((result) => {
+            return result.place.categories.some((category) => {
+              return category.id >= 13000 && category.id < 14000;
+            });
+          })
+        );
+      }
     };
     findLocations();
   }, [searchValue]);
