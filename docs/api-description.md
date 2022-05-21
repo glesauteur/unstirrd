@@ -31,7 +31,7 @@ Resource: `POST /api/checkins`
   "rating": 5,
 }
 ```
-### Get all checmins
+### Get all checkins
 
 Resource: `GET /api/checkins`
 
