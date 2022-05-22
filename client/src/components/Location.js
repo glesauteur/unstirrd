@@ -9,12 +9,12 @@ const Location = ({ location }) => {
     navigate(`/location/${location.place.fsq_id}`);
   };
   const locationCategories = location.place.categories.map(
-    (locationCategorie) => {
+    (locationCategorie, index) => {
       return (
-        <>
-          <div key={location.place.fsq_id}>{locationCategorie.name} </div>
+        <span key={index}>
+          <div>{locationCategorie.name} </div>
           <span>/</span>
-        </>
+        </span>
       );
     }
   );

@@ -11,13 +11,15 @@ import { debounce } from "../utils";
 
 import { AuthContext } from "../auth/AuthContext";
 
+const PLACES_SEARCH_MODE = "places";
+const COCKTAILS_SEARCH_MODE = "cocktails";
+
 const SearchBar = () => {
   const { latLong, setLatLong } = React.useContext(AuthContext);
   const [searchResults, setSearchResults] = useState(null);
   const [searchValue, setSearchValue] = useState(null);
   const [input, setInput] = useState(false);
-  const [title, setTitle] = useState("Where do you want to go out?");
-  const [subtitle, setSubtitle] = useState("Looking for a cocktail?");
+  const [searchMode, setSearchMode] = useState(PLACES_SEARCH_MODE);
 
   const handleClick = (e) => {
     if (e.target.localName === "input") {
@@ -28,14 +30,10 @@ const SearchBar = () => {
   };
 
   const handleSwitchSearch = () => {
-    if (title === "Where do you want to go out?") {
-      setSearchResults(null);
-      setTitle("What do you want to drink?");
-      setSubtitle("Looking for a place to go?");
-    } else if (title === "What do you want to drink?") {
-      setSearchResults(null);
-      setTitle("Where do you want to go out?");
-      setSubtitle("Looking for a cocktail?");
+    if (searchMode === PLACES_SEARCH_MODE) {
+      setSearchMode(COCKTAILS_SEARCH_MODE);
+    } else {
+      setSearchMode(PLACES_SEARCH_MODE);
     }
   };
 
@@ -54,48 +52,42 @@ const SearchBar = () => {
     if (searchValue === null) return;
 
     const findLocationsOrCocktails = async function () {
-      if (title === "Where do you want to go out?") {
-        if (!latLong) {
-          const response = await fetch(
-            `/api/locations/search?q=${searchValue}&lat=45.508888&long=-73.561668`
-          );
-          const data = await response.json();
+      if (searchMode === PLACES_SEARCH_MODE) {
+        const response = await fetch(
+          `/api/locations/search?q=${searchValue}&lat=${latLong.lat}&long=${latLong.long}`
+        );
+        const data = await response.json();
 
-          setSearchResults(
-            data.results.filter((result) => {
-              return result.place.categories.some((category) => {
-                return category.id >= 13000 && category.id < 14000;
-              });
-            })
-          );
-        } else {
-          const response = await fetch(
-            `/api/locations/search?q=${searchValue}&lat=${latLong.lat}&long=${latLong.long}`
-          );
-          const data = await response.json();
-
-          setSearchResults(
-            data.results.filter((result) => {
-              return result.place.categories.some((category) => {
-                return category.id >= 13000 && category.id < 14000;
-              });
-            })
-          );
-        }
-      } else if (title === "What do you want to drink?") {
+        setSearchResults(
+          data.results.filter((result) => {
+            return result.place.categories.some((category) => {
+              return category.id >= 13000 && category.id < 14000;
+            });
+          })
+        );
+      } else {
         const response = await fetch(`/api/cocktails?q=${searchValue}`);
         const data = await response.json();
         setSearchResults(data.cocktails);
       }
     };
     findLocationsOrCocktails();
-  }, [searchValue]);
+  }, [searchValue, latLong, searchMode]);
 
   useEffect(() => {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(showPosition);
+      navigator.geolocation.getCurrentPosition(showPosition, handleNoPosition);
     } else {
-      console.error("error");
+      handleNoPosition();
+    }
+
+    // When we can't have the user's position
+    // we default to Montreal, Canada
+    function handleNoPosition() {
+      setLatLong({
+        lat: 45.508888,
+        long: -73.561668,
+      });
     }
 
     function showPosition(position) {
@@ -104,23 +96,34 @@ const SearchBar = () => {
         long: position.coords.longitude,
       });
     }
-  }, []);
+  }, [setLatLong]);
 
   let bars;
   let cocktailList;
 
   if (searchResults) {
-    if (title === "Where do you want to go out?") {
+    if (searchMode === PLACES_SEARCH_MODE) {
       bars = searchResults.map((location) => {
         return (
           <Location key={location.place.fsq_id} location={location}></Location>
         );
       });
-    } else if (title === "What do you want to drink?") {
+    } else {
       cocktailList = searchResults.map((cocktail) => {
         return <Cocktail key={cocktail._id} cocktail={cocktail}></Cocktail>;
       });
     }
+  }
+
+  let title;
+  let subtitle;
+
+  if (searchMode === PLACES_SEARCH_MODE) {
+    title = "Where do you want to go out?";
+    subtitle = "Looking for a cocktail instead?";
+  } else {
+    title = "What do you want to drink?";
+    subtitle = "Looking for a place instead?";
   }
 
   return (

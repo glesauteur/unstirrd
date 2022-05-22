@@ -8,7 +8,7 @@ import { debounce } from "../utils";
 import { AuthContext } from "../auth/AuthContext";
 
 const LocationsSearchBar = ({ setLocation }) => {
-  const { latLong, setLatLong } = React.useContext(AuthContext);
+  const { latLong } = React.useContext(AuthContext);
   const [searchValue, setSearchValue] = useState(null);
   const [searchResults, setSearchResults] = useState(null);
   const [isFocused, setIsFocused] = useState(false);
@@ -16,36 +16,21 @@ const LocationsSearchBar = ({ setLocation }) => {
 
   useEffect(() => {
     const findLocations = async function () {
-      if (!latLong) {
-        const response = await fetch(
-          `/api/locations/search?q=${searchValue}&lat=45.508888&long=-73.561668`
-        );
-        const data = await response.json();
+      const response = await fetch(
+        `/api/locations/search?q=${searchValue}&lat=${latLong.lat}&long=${latLong.long}`
+      );
+      const data = await response.json();
 
-        setSearchResults(
-          data.results.filter((result) => {
-            return result.place.categories.some((category) => {
-              return category.id >= 13000 && category.id < 14000;
-            });
-          })
-        );
-      } else {
-        const response = await fetch(
-          `/api/locations/search?q=${searchValue}&lat=${latLong.lat}&long=${latLong.long}`
-        );
-        const data = await response.json();
-
-        setSearchResults(
-          data.results.filter((result) => {
-            return result.place.categories.some((category) => {
-              return category.id >= 13000 && category.id < 14000;
-            });
-          })
-        );
-      }
+      setSearchResults(
+        data.results.filter((result) => {
+          return result.place.categories.some((category) => {
+            return category.id >= 13000 && category.id < 14000;
+          });
+        })
+      );
     };
     findLocations();
-  }, [searchValue]);
+  }, [searchValue, latLong]);
 
   let locationList;
 
@@ -58,7 +43,6 @@ const LocationsSearchBar = ({ setLocation }) => {
             setInput(location.place.name);
             setLocation(location.place.fsq_id);
           }}
-          key={location.place.fsq_id}
         >
           {location.place.name}
         </Location>
