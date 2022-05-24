@@ -1,15 +1,11 @@
-import { faHandBackFist } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { AuthContext } from "../auth/AuthContext";
 import HomefeedActivity from "../components/HomefeedActivity";
 
 const Homefeed = () => {
-  const { user } = React.useContext(AuthContext);
   const [followingCheckins, setFollowingCheckins] = useState(null);
   const [allCheckins, setAllCheckins] = useState(null);
   const [toggle, setToggle] = useState(false);
-  const [numItems, setNumItems] = useState(8);
 
   const handleToggle = () => {
     if (toggle) {
@@ -24,13 +20,15 @@ const Homefeed = () => {
       const response = await fetch(`api/checkins?followingsOnly=true`);
       const data = await response.json();
 
-      setFollowingCheckins(data.checkins);
+      // TODO: Store creation date in DB and orderBy instead.
+      setFollowingCheckins(data.checkins.reverse());
     };
     const getAllCheckins = async function () {
       const response = await fetch(`api/checkins`);
       const data = await response.json();
 
-      setAllCheckins(data.checkins);
+      // TODO: Store creation date in DB and orderBy instead.
+      setAllCheckins(data.checkins.reverse());
     };
 
     getFollowingCheckins();
@@ -159,11 +157,6 @@ const Label = styled.label`
   :active:after {
     width: 16px;
   }
-`;
-
-const Hr = styled.hr`
-  border-color: white;
-  border-style: solid;
 `;
 
 export default Homefeed;

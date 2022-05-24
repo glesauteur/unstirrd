@@ -21,7 +21,7 @@ function App() {
   return (
     <Router>
       <GlobalStyles />
-      <div>
+      <div style={{ paddingBottom: "40px" }}>
         <AuthProvider>
           <Header UnstirrdLogo={UnstirrdLogo} />
           <Routes>

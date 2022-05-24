@@ -94,6 +94,10 @@ const CheckinPage = () => {
     }
   };
 
+  const cocktailModeSwitch = newCocktail
+    ? "Or choose from exisiting cocktails "
+    : "Had a different cocktail? Add it yourself ";
+
   return (
     <>
       <Container>
@@ -104,9 +108,9 @@ const CheckinPage = () => {
             <hr />
             <Cocktail>
               <Title>What did you drink?</Title>
-              <CocktailsSearchBar setCocktail={setCocktail} />
+              {!newCocktail && <CocktailsSearchBar setCocktail={setCocktail} />}
               <CustomCocktail>
-                Had a custom cocktail? Add it
+                {cocktailModeSwitch}
                 <ClickHere onClick={handleNewCocktail}> here</ClickHere>!
                 {newCocktail && <NewCocktail setCocktail={setCocktail} />}
               </CustomCocktail>

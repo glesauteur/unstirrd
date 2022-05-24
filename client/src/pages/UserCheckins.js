@@ -17,7 +17,8 @@ const UserCheckins = () => {
   useEffect(() => {
     fetch(`/api/users/${userId}/checkins`)
       .then((response) => response.json())
-      .then((response) => setUserCheckins(response.checkins))
+      // TODO: Store creation date in DB and orderBy instead.
+      .then((response) => setUserCheckins(response.checkins.reverse()))
       .catch((err) => console.error(err));
   }, [userId]);
 
